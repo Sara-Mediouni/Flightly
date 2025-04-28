@@ -4,8 +4,8 @@ import { testimonials } from '../data'
 
 const Feedbacks = () => {
   return (
-    <div className='flex justify-center items-center h-[80vh] w-full bg-gradient-to-b from-violet900 to-violet800'>
-    <span className='text-center w-[50%] text-white text-4xl font-bold p-5'>Ready to start your journey? Join thousands of happy travelers who trust Flightly for unforgettable experiences.</span>
+    <div className='flex md:p-20 justify-center items-center h-full w-full '>
+    <span className='text-center w-full text-white text-xl md:text-4xl font-bold p-10'>Ready to start your journey?Join <span className='text-violet900'> thousands</span> of happy travelers who trust Flightly for unforgettable experiences.</span>
         <AnimatedTestimonials testimonials={testimonials}/>
     </div>
   )

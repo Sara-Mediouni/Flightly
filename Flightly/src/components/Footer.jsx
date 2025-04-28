@@ -2,11 +2,11 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <footer className='flex flex-col items-center justify-center w-full h-[30vh] bg-violet900'>
-        <div className='flex flex-col items-center justify-center w-full h-full'>
-            <h2 className='text-2xl font-bold text-white'>Flightly</h2>
-            <p className='text-lg text-white'>Your travel companion</p>
-            <div className='flex space-x-4 mt-4'>
+    <footer className='bottom-0 w-full min-h-[300px] bg-violet900 flex justify-center items-center'>
+        <div className='flex flex-col items-center text-sm md:text-xl justify-center w-full h-full'>
+            <h2 className='md:text-2xl font-bold text-white'>Flightly</h2>
+            <p className='md:text-lg text-white'>Your travel companion</p>
+            <div className='flex space-x-4 mt-4 '>
             <a href="#" className='text-white'>Privacy Policy</a>
             <a href="#" className='text-white'>Terms of Service</a>
             <a href="#" className='text-white'>Contact Us</a>

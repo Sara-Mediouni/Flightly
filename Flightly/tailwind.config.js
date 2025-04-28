@@ -83,12 +83,17 @@ export default {
   			}
   		}
   	},
+	  screens: {
+		sm: '640px',
+		md: '768px',
+		lg: '1024px',
+		xl: '1280px',
+	  },
   	colors: {
   		violet900: '#231942',
   		violet800: '#5e548e',
   		violet700: '#9f86c0',
   		violet600: '#be95c4',
-  		violet200: '#b8b8ff',
   	
   		black: '#000',
   		white: '#fff'

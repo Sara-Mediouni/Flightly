@@ -1,16 +1,19 @@
 @import url("https://fonts.cdnfonts.com/css/general-sans");
 @import url('https://fonts.cdnfonts.com/css/rangile');
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://unpkg.com/leaflet@1.7.1/dist/leaflet.css');
 @import "tailwindcss";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body{
-    font-family: 'General Sans',sans-serif;
+    font-family: "PT Serif", serif;
     width: 100dvw;
-    background-color: #5e548e;
-    overflow-x:hidden
-
+    background-image: linear-gradient(to right,#231942,#9f86c0,oklch(81.1% 0.111 293.571));
+   
+    overflow-x:hidden !important;
+    text-transform: capitalize;
 
 }
 @theme {
@@ -110,8 +113,64 @@ body{
       clip-path: ellipse(38% 49% at 49% 52%);
 
     }
-    #story{
-      background-image: url('./assets/arc-de-triomphe-7213188_960_720.jpg');
-      background-size: cover;
-    }
+   
+}
+.test::after {
+  
+  color: #231942;
+  mix-blend-mode: color;
+}
+.button{
+  box-shadow: 5px 5px 5px #231942;
+  background-color: #231942;
+  font-weight: 500;
+  display: flex;
+  font-size: large;
+  justify-items: center;
+  align-self: center;
+  color:white;
+  border-radius: 25px;
+  border-color: #231942;
+  width: 120px;
+  justify-content: center;
+  height:40px;
+  padding: auto;
+  align-items: center;
+  margin-top: 20px;
+  border-width: 2px;
+}
+.button:hover{
+ scale: 1.2;
+ 
+  
+  
+}
+.dream {
+  background-image: url('./assets/leonard-cotte-R5scocnOOdM-unsplash.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height:700px;
+  
+}
+.hero{
+  background-image: url('./assets/nicole-geri-eUyNYtwN0tA-unsplash.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  
+  top:0;
+
+
+}
+
+
+.japan div{
+
+  width: 400px;
+  height: 400px;
+  clip-path: polygon(
+    10% 0%, 90% 0%, 100% 20%, 100% 80%,
+    90% 100%, 10% 100%, 0% 80%, 0% 20%
+  );
+  border-radius: 30px;
+
 }

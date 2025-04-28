@@ -14,7 +14,7 @@ export const Card = React.memo(({
     onMouseEnter={() => setHovered(index)}
     onMouseLeave={() => setHovered(null)}
     className={clsx(
-      "rounded-lg relative bg-gray-100 dark:bg-neutral-900 overflow-hidden h-60 md:h-96 w-full transition-all duration-300 ease-out",
+      "rounded-lg relative shadow-2xl bg-gray-100 dark:bg-neutral-900 overflow-hidden h-60 md:h-96 w-full transition-all duration-300 ease-out",
       hovered !== null && hovered !== index && "blur-sm scale-[0.98]"
     )}>
     <img

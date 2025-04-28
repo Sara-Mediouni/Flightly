@@ -1,9 +1,10 @@
 export const navItems = [
    
-    { name: "Home", link: "/pastry" },
-    { name: "Hotels", link: "/clothes" },
-    { name: "Flights", link: "/deco" },
-    { name: "Contact", link: "#contact" }, 
+    { name: "Home", link: "/" },
+    { name: "Hotels", link: "/hotels" },
+    { name: "Resorts", link: "/resorts" },
+    { name: "Flights", link: "/flights" },
+    { name: "Contact", link: "/contact" }, 
     { name: "About", link: "/about" },
   ];
 

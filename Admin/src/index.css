@@ -1,0 +1,30 @@
+@import 'tailwindcss';
+ @theme {
+    --color-violet-900: #231942;
+  }
+  .input {
+    @apply w-full p-2 border border-violet-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-900;
+  }
+
+
+  body{
+    background-color:  #9f86c0;
+  }
+  .delete{
+    @apply bg-red-500 text-white font-bold py-2 px-4 rounded;
+  }
+ .add{
+    @apply bg-green-700 text-white font-bold py-2 px-4 rounded;
+  }
+  .update{
+    @apply bg-blue-500 text-white font-bold py-2 px-4 rounded;
+  }
+  .table{
+    @apply w-full border-collapse border border-violet-900;
+  }
+  .th{
+    @apply bg-violet-900 text-white p-2 border border-violet-900;
+  }
+  .td{
+    @apply p-2 border border-violet-900;
+  }
