@@ -124,7 +124,7 @@ const Navbar = () => {
       ) : (
         <button
           onClick={() => dispatch(openLoginPopup())}
-          className="flex justify-center items-center px-2 font-bold text-white rounded-full border-2 border-violet700 w-30 h-10"
+          className="flex justify-center items-center px-2 font-bold text-white rounded-full border-2 border-violet700 w-20 md:w-30 h-10"
         >
           Login
         </button>
