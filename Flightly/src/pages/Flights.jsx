@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { FaLongArrowAltRight } from "react-icons/fa";
 import planeAnim from "../assets/planeanim.json";
 import Lottie from "lottie-react";
 import { IoIosArrowDropupCircle } from "react-icons/io";
@@ -7,7 +6,6 @@ import { LuBaggageClaim } from "react-icons/lu";
 import { MdBackpack } from "react-icons/md";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { useSelector } from "react-redux";
-import ReactSlider from "react-slider";
 import axios from "axios";
 import animation from '../assets/404NotFound.json'
 import  { useNavigate }  from "react-router-dom";
