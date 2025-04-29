@@ -39,9 +39,8 @@ Une plateforme moderne de réservation de **vols** ✈️, **hôtels** 🏨 et *
 
 ## 📸 **Aperçu**
 
-*(Ajoute ici un ou plusieurs screenshots de ton application.)*  
-**Exemple** :
-> ![Capture d'écran](lien-vers-image)
+
+> ![Preview](https://flightly-21xm.vercel.app)
 
 ---
 
@@ -55,7 +54,7 @@ git clone https://github.com/Sara-Mediouni/Flightly.git
 cd flightly
 
 # 3. Installer les dépendances
-cd frontend && npm install
+cd flightly && npm install
 cd backend && npm install
 cd admin && npm install
 
