@@ -81,4 +81,7 @@ npm run dev
 
 -🧾 Historique et suivi des réservations.
 
+---
 
+## ⚠️ Remarque
+Nécessite MongoDB et Stripe pour finaliser les commandes.
