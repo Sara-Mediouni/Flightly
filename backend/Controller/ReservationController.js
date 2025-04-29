@@ -3,7 +3,7 @@ const ReserveModel = require("../Models/Reservation");
 const userModel = require("../Models/User");
 const flight = require("../Models/Flight");
 const mongoose=require('mongoose')
-const stripe = new Stripe("sk_test_51RBMXo4FlSbelSuKp15qkCFl65CTopoEuNZcQ5pIjYp0rJjoHazQIQkaunaimiOvL6enfref6slxKJRmfvx11w1q003oe4GUPp");
+const stripe = new Stripe(process.env.STRIPE_API_KEY);
 
 const frontend_url = "http://localhost:5173";
 

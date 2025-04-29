@@ -1,7 +1,7 @@
 const mongoose=require ("mongoose")
 
 const connectDB=async()=>{
-  await mongoose.connect("mongodb+srv://sarahmediouni4:JFCIoZiYbavivnNr@cluster0.zdz9o8e.mongodb.net/Flightly?retryWrites=true&w=majority&appName=Cluster0")
+  await mongoose.connect(process.env.MONGO_URI)
   .then(()=>
   console.log("DB connected"));
 }
