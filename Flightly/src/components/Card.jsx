@@ -1,28 +1,34 @@
 import { Carousel } from "../ui/carousel";
 
 export function CarouselDemo() {
-    const slideData = [
-      {
-        title: "Mystic Mountains",
-        button: "Explore Packs",
-        src: "https://images.unsplash.com/photo-1494806812796-244fe51b774d?q=80&w=3534&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      },
-      {
-        title: "Urban Dreams",
-        button: "Explore Packs",
-        src: "https://images.unsplash.com/photo-1518710843675-2540dd79065c?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      },
-      {
-        title: "Neon Nights",
-        button: "Explore Packs",
-        src: "https://images.unsplash.com/photo-1590041794748-2d8eb73a571c?q=80&w=3456&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      },
-      {
-        title: "Desert Whispers",
-        button: "Explore Packs",
-        src: "https://images.unsplash.com/photo-1679420437432-80cfbf88986c?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      },
-    ];
+  const slideData = [
+    {
+      title: "Alpine Escape – Switzerland",
+      button: "Explore Packs",
+      src: "https://images.unsplash.com/photo-1742992682920-c3b80c6e9094?q=80&w=1254&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      description: "Breathe in fresh mountain air and unwind in luxury lodges.",
+    },
+    {
+      title: "Parisian Weekend – France",
+      button: "Explore Packs",
+      src: "https://plus.unsplash.com/premium_photo-1717422935480-6a66474b88a9?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      description: "Wander through charming streets and iconic landmarks.",
+    },
+    {
+      title: "Neon Dreams – Tokyo, Japan",
+      button: "Explore Packs",
+      src: "https://images.unsplash.com/photo-1607419726991-5fc7e74cda67?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      description: "Dive into futuristic vibes and timeless traditions.",
+    },
+    {
+      title: "Desert Serenity – Morocco",
+      button: "Explore Packs",
+      src: "https://images.unsplash.com/photo-1542401886-65d6c61db217?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      description: "Experience golden dunes and star-lit silence.",
+    },
+  ];
+  
+  
     return (
       <div className="flex items-center justify-center">
       <div className="relative overflow-hidden w-full h-full px-20  ">

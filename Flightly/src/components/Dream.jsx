@@ -5,19 +5,18 @@ const Dream = () => {
     <section className="relative dream py-24 mt-20 px-6 md:px-20 text-center">
     <div className="max-w-3xl mx-auto z-10 relative">
       <h1 className="text-3xl md:text-5xl font-extrabold text-violet900 leading-tight mb-6">
-        The Journey You'll be Talking <br /> About for Years!
+        Travel Experiences You'll Talk <br /> About for a Lifetime!
       </h1>
       <p className="text-white text-md md:text-lg font-medium mb-8">
-        Are you ready for the excitement of world-famous <strong>music festivals</strong> or the adrenaline of
-        <strong> sporting events</strong> combined with a <strong>charter flight</strong>? We’ll organize everything – from transportation
-        and exclusive event spots to your company and good mood.
+        Dreaming of iconic <strong>beach resorts</strong>, luxurious <strong>charter flights</strong>, or vibrant <strong>cultural escapes</strong>?
+        We curate the perfect journey for you — from premium accommodations and breathtaking activities to seamless logistics and unforgettable memories.
       </p>
       <button className="bg-violet900 hover:bg-violet700 text-white px-6 py-3 rounded-full font-semibold transition">
-        Sign up now!
+        Plan Your Journey
       </button>
     </div>
-   
   </section>
+  
   )
 }
 
