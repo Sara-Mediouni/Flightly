@@ -60,7 +60,9 @@ cd admin && npm install
 
 # 4. Configurer le backend
 Créer un fichier `.env` dans `/backend` avec :
-- MONGO_URI = votre URI MongoDB
+-MONGO_URI=your_mongodb_uri
+-JWT_SECRET=your_jwt_secret
+-STRIPE_API_KEY=your_stripe_secret
 - PORT = 4000 (ou autre)
 
 # 5. Lancer l'application
@@ -72,6 +74,7 @@ npm run dev
 ---
 ```
  ## 📋 Fonctionnalités principales
+ ##  Utilisateur
 -🔎 Recherche de vols et hébergements.
 
 -📅 Réservation rapide et simplifiée.
@@ -79,7 +82,12 @@ npm run dev
 -👤 Gestion du compte utilisateur.
 
 -🧾 Historique et suivi des réservations.
+##  Admin Dashboard
+-📦 Gestion des vols et hébergements.
 
+-👤 Gestion des utilisateurs
+
+-🧾 Suivi et mise à jour des reservations
 ---
 
 ## ⚠️ Remarque
