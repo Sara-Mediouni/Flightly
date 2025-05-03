@@ -40,7 +40,7 @@ Une plateforme moderne de réservation de **vols** ✈️, **hôtels** 🏨 et *
 ## 📸 **Aperçu**
 
 
-> ![Preview](https://flightly-21xm.vercel.app)
+> (https://flightly-21xm.vercel.app)
 
 ---
 
@@ -88,6 +88,7 @@ npm run dev
 -👤 Gestion des utilisateurs
 
 -🧾 Suivi et mise à jour des reservations
+
 ---
 
 ## ⚠️ Remarque
