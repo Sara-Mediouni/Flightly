@@ -97,7 +97,7 @@ export default function Add() {
       data.maxOccupancy === 0
     );
   };
-
+  const token=localStorage.getItem("admin")
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -125,8 +125,12 @@ export default function Add() {
 
     try {
       const res = await axios.post(
-        "http://localhost:4000/api/accommodation/create",
-        formData
+        "http://localhost:4000/acc/admin/create",
+        formData,
+          {
+         headers:{
+          'Authorization':`Bearer ${token}`
+         }}
       );
       toast.success("Accommodation added successfully!");
     } catch (err) {
@@ -694,6 +698,7 @@ export default function Add() {
                     />
                     <input
                       type="number"
+                      min={1}
                       placeholder="Available Rooms"
                       value={season.availableRooms}
                       onChange={(e) =>

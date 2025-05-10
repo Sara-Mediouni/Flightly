@@ -34,7 +34,7 @@ const flightSchema = new mongoose.Schema({
   },
   cabinAllowance: { type: Number, default: 0 },
   refundable: { type: Boolean, default: false }
-});
+},{timestamps:true});
 
 const flight = mongoose.models.flight || mongoose.model('flight', flightSchema);
 module.exports = flight;

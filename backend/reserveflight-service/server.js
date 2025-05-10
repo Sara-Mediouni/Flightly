@@ -17,7 +17,7 @@ app.use(cors())
 app.use(morgan('dev'));
 
 app.use(helmet());
-app.use('/resflight',reservRoute)
+app.use('/reserveflight',reservRoute)
 app.use('/admin',adminRouter)
 app.use(ErrorHandler)
 connectDB();

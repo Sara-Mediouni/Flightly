@@ -6,13 +6,14 @@ import { FaTrash } from "react-icons/fa";
 const EditAcc = () => {
   const [AccommodationData, setAccommodationData] = useState();
   const id = localStorage.getItem("id");
+  const token=localStorage.getItem("admin")
   const [offerData, setOfferData] = useState();
   const [Newimages, setNewimages] = useState([])
   const [images, setImages] = useState([]);
   const getAccommodationData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/api/accommodation/${id}`
+        `http://localhost:4000/acc/acc/${id}`
       );
       setAccommodationData(response.data);
       setOfferData(response.data.offers || {});
@@ -59,13 +60,16 @@ const EditAcc = () => {
 
   const handleRemoveRoomImage = async (roomIndex, imageIndex, imagePath) => {
     try {
-      await axios.delete(`http://localhost:4000/api/accommodation/room-image/${id}`, {
+      await axios.delete(`http://localhost:4000/acc/admin/room-image/${id}`, {
         data: {
           // L'id de l'accommodation
           roomIndex,
           imagePath,
         },
-      });
+      }, {
+         headers:{
+          'Authorization':`Bearer ${token}`
+         }});
       console.log("Image supprimée de MongoDB avec succès");
       alert("Image supprimée de MongoDB avec succès");
       getAccommodationData(); // Récupérer à nouveau les données de l'hébergement
@@ -84,13 +88,14 @@ const EditAcc = () => {
   
   const RemoveImageAcc = async (imageIndex, imagePath) => {
     try {
-      await axios.delete(`http://localhost:4000/api/accommodation/image/${id}`, {
+      await axios.delete(`http://localhost:4000/acc/admin/image/${id}`, {
         data: {
-          // L'id de l'accommodation
-          
           imagePath,
-        },
-      });
+        }},{
+         headers:{
+          'Authorization':`Bearer ${token}`
+         }}
+      );
       console.log("Image supprimée de MongoDB avec succès");
       alert("Image supprimée de MongoDB avec succès");
       getAccommodationData(); // Récupérer à nouveau les données de l'hébergement
@@ -152,8 +157,12 @@ const EditAcc = () => {
 
     try {
       const res = await axios.put(
-        `http://localhost:4000/api/accommodation/edit/${id}`,
-        formData
+        `http://localhost:4000/acc/admin/edit/${id}`,
+        formData,
+       {
+         headers:{
+          'Authorization':`Bearer ${token}`
+         }}
       );
       alert("Accommodation added successfully!");
     } catch (err) {
@@ -638,7 +647,7 @@ const EditAcc = () => {
                 {room.roomImages?.map((img, imgIndex) => (
                   <div key={imgIndex} className="relative">
                     <img
-                      src={`http://localhost:4000${img}`}
+                      src={`http://localhost:4000/acc/uploads/${img}`}
                       alt={`Room ${index} - Img ${imgIndex}`}
                       className="w-24 h-24 object-cover rounded"
                     />
@@ -931,7 +940,7 @@ const EditAcc = () => {
           {AccommodationData?.images?.map((img, index) => (
             <div key={index} className="relative">
               <img
-                src={`http://localhost:4000${img}`}
+                src={`http://localhost:4000/acc/uploads/${img}`}
                 alt={`Accommodation ${index}`}
                 className="w-32 h-32 object-cover rounded"
               />

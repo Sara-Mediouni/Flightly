@@ -40,7 +40,7 @@ const Resorts = () => {
       console.log(Name);
       axios
         .get(
-          `http://localhost:4000/api/accommodation/?type=Resort&country=${Country}&name=${Name}`
+          `http://localhost:4000/acc/acc/?type=Resort&country=${Country}&name=${Name}`
         )
         .then((response) => {
           console.log(response.data);
@@ -54,7 +54,7 @@ const Resorts = () => {
     
     const getresorts = () => {
       axios
-        .get("http://localhost:4000/api/accommodation/?type=Resort")
+        .get("http://localhost:4000/acc/acc/?type=Resort")
         .then((response) => {
           console.log(response.data);
           setResorts(response.data);
@@ -81,7 +81,7 @@ const Resorts = () => {
     }, []);
   return (
  <div className="w-full h-full mt-40 my-10">
-       <h1 className="text-xl md:text-4xl text-white relative font-bold p-20">
+       <h1 className="text-4xl text-white relative font-bold p-20">
          The Best Stays, All in One Place
        </h1>
        <div className="grid items-center justify-center relative mx-10">

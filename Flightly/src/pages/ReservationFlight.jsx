@@ -30,7 +30,7 @@ const FlightReservation = () => {
     // Liste des vols disponibles (exemple)
   
     const getUser = async () => {
-        axios.get(`http://localhost:4000/api/user/getuser/${user}`)
+        axios.get(`http://localhost:4000/user/user/getuser/${user}`)
             .then((response) => {
                    console.log(response.data);
                    setForm(response.data.user);
@@ -92,7 +92,7 @@ const FlightReservation = () => {
             return;
         }
         console.log(flightData)
-        axios.post(`http://localhost:4000/api/reserver/order/${user}/${idFlight}`,
+        axios.post(`http://localhost:4000/reserveflight/reserveflight/reserver/order/${user}/${idFlight}`,
            {flightData}
         )
         .then(res => {
@@ -118,7 +118,7 @@ const FlightReservation = () => {
     };
     const getFlightData = async () => {
         try {
-            const response = await axios.get(`http://localhost:4000/api/flight/${idFlight}`);
+            const response = await axios.get(`http://localhost:4000/flight/flight/${idFlight}`);
             const flight = response.data;
             setFlight(flight);
         } catch (error) {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+
 
 import Navbar from './Components/Navbar'
 import Sidebar from './Components/Sidebar'
@@ -15,7 +15,7 @@ import EditFlight from './Pages/Flights/EditFlight';
 import ReservationAcc from './Pages/ReservationsHotel';
 import ProtectedRoute from './Components/ProtectedRoutes';
 import Login from './Components/Login';
-
+import LoginRoute from './Components/LoginRoute'
 
 const App = () => {
   const location = useLocation();
@@ -28,8 +28,8 @@ const App = () => {
       {!isLoginPage && <Navbar />}
         <main className="flex-1 p-4 overflow-y-auto bg-gray-100">
           <Routes>
-          <Route path="/" element={<LoginRoute><Login/></LoginRoute>}/>
-
+          
+            <Route path="/" element={<LoginRoute><Login/></LoginRoute>}/>
             <Route path="/flights" element={<ProtectedRoute><ListFlight /></ProtectedRoute>} />
             <Route path="/resorts" element={<ProtectedRoute><ListResorts /></ProtectedRoute>} />
             <Route path="/reservations" element={<ProtectedRoute><Reservations/></ProtectedRoute>} />

@@ -47,7 +47,7 @@ const LoginSignupModal = ({ onClose }) => {
     const endpoint = showLogin ? "login" : "register";
     console.log(endpoint);
     axios
-      .post(`http://localhost:4000/api/user/${endpoint}`, form)
+      .post(`http://localhost:4000/user/user/${endpoint}`, form)
       .then((response) => {
         if (response.data.success) {
           console.log(response.data.message);

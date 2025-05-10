@@ -8,7 +8,6 @@ import {
   FaSpa,
   FaUmbrellaBeach,
 } from "react-icons/fa6";
-import { PiClockClockwiseBold } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import {
   MdLocalParking,
@@ -98,7 +97,7 @@ const HotelDetails = () => {
   const getRoomsPrices = () => {
     axios
       .get(
-        `http://localhost:4000/api/accommodation/roomPrices/${hotel}?startDate=${checkInDate}&endDate=${checkOutDate}`
+        `http://localhost:4000/acc/acc/roomPrices/${hotel}?startDate=${checkInDate}&endDate=${checkOutDate}`
       )
       .then((response) => {
         console.log(response.data);
@@ -120,7 +119,7 @@ const HotelDetails = () => {
   }
   const getHotel = () => {
     axios
-      .get(`http://localhost:4000/api/accommodation/${hotel}`)
+      .get(`http://localhost:4000/acc/acc/${hotel}`)
       .then((response) => {
         console.log(response.data);
         setHotels(response.data);
@@ -153,7 +152,7 @@ const HotelDetails = () => {
         <>
           <div className="h-full w-full ">
             <img
-              src={`http://localhost:4000${hotels?.images[0]}`}
+              src={`http://localhost:4002${hotels?.images[0]}`}
               alt="Hotel"
               className="w-full h-[500px] object-cover rounded-2xl"
             />

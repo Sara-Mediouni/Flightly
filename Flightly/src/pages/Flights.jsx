@@ -26,7 +26,7 @@ const Flights = () => {
 
     axios
       .get(
-        `http://localhost:4000/api/flight/flights?from=${from}&to=${to}&departureDate=${dateDep}&returnDate=${dateArr}&classType=${classType}&passengers=${passengers}&type=${type}`
+        `http://localhost:4000/flight/flight/flights?from=${from}&to=${to}&departureDate=${dateDep}&returnDate=${dateArr}&classType=${classType}&passengers=${passengers}&type=${type}`
       )
       .then((response) => {
         console.log(response.data);
@@ -52,7 +52,7 @@ const Flights = () => {
   };
   const getFlights = () => {
     axios
-      .get("http://localhost:4000/api/flight/allflights")
+      .get("http://localhost:4000/flight/flight/allflights")
       .then((response) => {
         console.log(response.data);
         setFlights(response.data);
@@ -89,7 +89,7 @@ const Flights = () => {
  
   return (
     <div className="h-auto my-10 mt-40 px-auto mx-20">
-      <h1 className="text-sm md:text-4xl text-white relative font-bold p-20">
+      <h1 className="text-4xl text-white relative font-bold p-20">
         Fly Smarter, Travel Better
       </h1>
       <div className="grid items-center justify-center relative mx-20">
@@ -261,9 +261,9 @@ const Flights = () => {
          
           ${openIndex === index ? "flex" : "hidden"}`}
             >
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
                 {/* FROM */}
-                <div className="flex flex-col">
+                <div className="flex flex-col ">
                   <h1 className="font-bold text-xl">{flight.from}</h1>
                   <span className="text-xl text-gray-600">
                     {flight.departurePlace}
@@ -273,12 +273,12 @@ const Flights = () => {
                   </span>
                 </div>
 
-                {/* PLANE ANIMATION */}
-                <div className="flex justify-center items-center">
-                  <Lottie animationData={planeAnim} className="w-50 h-20" />
+                
+                <div className="flex justify-center md:justify-start items-center">
+                  <Lottie animationData={planeAnim} className="w-50 h-10" />
                 </div>
 
-                {/* TO */}
+
                 <div className="flex flex-col items-end lg:items-start">
                   <h1 className="font-bold text-xl">{flight.to}</h1>
                   <span className="text-xl text-gray-600">
@@ -290,7 +290,7 @@ const Flights = () => {
                 </div>
               </div>
 
-              {/* TIME & DURATION */}
+   
               <div className="grid grid-cols-3 gap-4 mt-4 text-center w-full">
                 <div className="flex flex-col justify-start items-start">
                   <h2 className="font-bold text-lg">
@@ -300,7 +300,7 @@ const Flights = () => {
                     {formatDayAndDate(flight.departureDate)}
                   </p>
                 </div>
-                <div className="flex flex-col justify-center">
+                <div className="flex flex-col justify-center items-start">
                   <p className="text-sm text-gray-500">{flight.duration}</p>
                   <p className="text-sm text-gray-500">
                     {flight?.flightType}

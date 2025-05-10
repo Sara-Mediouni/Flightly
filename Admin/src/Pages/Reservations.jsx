@@ -11,17 +11,17 @@ export default function Reservation() {
 
 const handleDelete = async (id) => {
   try {
-    await axios.delete(`http://localhost:4000/api/r/flights/${id}`);
+    await axios.delete(`http://localhost:4000/reserveflight/admin/flights/${id}`);
     setReserve(reserve.filter((r) => r._id !== id));
-    getAllFlights(); // Refresh the r list after deletion
+    getAllReservations(); 
   } catch (error) {
-    console.error('Error deleting r:', error);
+    console.error('Error deleting :', error);
   }
 };
 
 const getAllReservations = async () => { 
   try {
-    const response = await axios.get('http://localhost:4000/api/reserver/');
+    const response = await axios.get('http://localhost:4000/reserveflight/reserveflight/');
     setReserve(response.data.data);
     console.log(response.data.data)
   } catch (error) {

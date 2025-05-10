@@ -7,13 +7,19 @@ import { MdEditDocument } from "react-icons/md";
 export default function ListResorts() {
   const [resorts, setResorts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const token=localStorage.getItem("admin")
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/accommodation/${id}`);
+      await axios.delete(`http://localhost:4000/acc/admin/${id}`
+        ,{
+         headers:{
+          'Authorization':`Bearer ${token}`
+         }}
+      );
       setResorts(resorts.filter((hotel) => hotel._id !== id));
-      fetchResorts(); // Refresh the hotel list after deletion
+      fetchResorts(); 
     } catch (error) {
-      console.error('Error deleting hotel:', error);
+      console.error('Error deleting resort:', error);
     }
   };
   const navigate = useNavigate();
@@ -23,7 +29,7 @@ export default function ListResorts() {
   }
      const fetchResorts = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/accommodation/?type=Resort');
+        const response = await axios.get('http://localhost:4000/acc/acc/?type=Resort');
         setResorts(response.data);
         console.log(response.data);
       } catch (error) {

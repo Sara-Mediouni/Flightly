@@ -1,12 +1,13 @@
 const express= require ('express');
 const { listOrders
 
-  }= require ('../Controller/ReservationController')
+  }= require ('../Controller/ReservationController');
+const { authMiddleware } = require('../middleware/auth');
 
 
 const adminRouter=express.Router();
 
-adminRouter.get('/', listOrders)
+adminRouter.get('/',authMiddleware, listOrders)
 
 
 

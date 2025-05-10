@@ -10,7 +10,7 @@ const MyReservations = () => {
     const [RoomReservations, setRoomreservations] = useState()
     const user=useSelector((state=>state.auth.user));
    const getmyreservations=()=>{
-    axios.get(`http://localhost:4000/api/reserver/getall/${user}`)
+    axios.get(`http://localhost:4000/reserveflight/reserveflight/getall/${user}`)
     .then((response)=>{
       setreservations(response.data.orders)
       console.log(response.data)
@@ -20,7 +20,7 @@ const MyReservations = () => {
     })
    }
    const getmyroomsreservations=()=>{
-    axios.get(`http://localhost:4000/api/reserveracc/getall/${user}`)
+    axios.get(`http://localhost:4000/reserveacc/reserveracc/getall/${user}`)
     .then((response)=>{
       setRoomreservations(response.data.orders)
       console.log(response.data)

@@ -19,7 +19,7 @@ const goToDetails = () => {
  
   
 
-  const url=`http://localhost:4000${image}`
+  const url=`http://localhost:4002${image}`
   console.log(url)
   return (
   

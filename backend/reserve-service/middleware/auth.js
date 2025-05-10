@@ -1,6 +1,6 @@
 const jwt =require("jsonwebtoken") ;
 
-export const authMiddleware = (req, res, next) => {
+const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -22,3 +22,4 @@ export const authMiddleware = (req, res, next) => {
     return res.status(400).json({ message: "Invalid token" });
   }
 };
+module.exports={authMiddleware}

@@ -26,7 +26,7 @@ const Login = () => {
       .then((response)=>{
         console.log(response.data)
         localStorage.setItem("admin",response.data.admin)
-        navigate("/food")
+        navigate("/flights")
       })
       .catch((err)=>{
         setError(err.response.data.message)
@@ -45,7 +45,7 @@ const Login = () => {
 
      
       <form className="flex flex-col gap-10 w-full px-10" 
-      onSubmit={handleSubmit}>
+       onSubmit={handleSubmit}>
         <input
           type="email"
           placeholder="Email"

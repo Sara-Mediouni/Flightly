@@ -19,7 +19,7 @@ const ProfilePage = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
   const getUser = async () => {
-     axios.get(`http://localhost:4000/api/user/getuser/${user}`)
+     axios.get(`http://localhost:4000/user/user/getuser/${user}`)
          .then((response) => {
                 console.log(response.data);
                 setForm(response.data.user);
@@ -30,7 +30,7 @@ const ProfilePage = () => {
             });
     };        
   const handleUpdate = () => {
-    axios.put(`http://localhost:4000/api/user/updateuser/${user}`,
+    axios.put(`http://localhost:4000/user/user/updateuser/${user}`,
         form
     )
     // Appelle ici une API si besoin

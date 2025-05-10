@@ -7,13 +7,17 @@ import { MdEditDocument } from "react-icons/md";
 export default function ListHotels() {
   const [hotels, setHotels] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const token=localStorage.getItem('admin')
 
 const handleDelete = async (id) => {
   try {
-    await axios.delete(`http://localhost:4000/api/accommodation/${id}`);
+    await axios.delete(`http://localhost:4000/acc/admin/${id}`,{
+      headers:{
+        'Authorization':`Bearer ${token}`
+      }
+    });
     setHotels(hotels.filter((hotel) => hotel._id !== id));
-    fetchhotels(); // Refresh the hotel list after deletion
+    fetchhotels(); 
   } catch (error) {
     console.error('Error deleting hotel:', error);
   }
@@ -25,7 +29,7 @@ const handleEdit = async (id) => {
 }
 const fetchhotels = async () => {
   try {
-    const response = await axios.get('http://localhost:4000/api/accommodation/?type=Hotel');
+    const response = await axios.get('http://localhost:4000/acc/acc/?type=Hotel');
     setHotels(response.data);
   } catch (error) {
     console.error('Error fetching hotels:', error);

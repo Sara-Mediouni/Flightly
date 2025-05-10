@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaUser, FaCalendarAlt, FaBaby, FaPhoneAlt, FaMailBulk } from "react-icons/fa";
 import { MdOutlineFamilyRestroom } from "react-icons/md";
-import { IoIosArrowDown } from "react-icons/io";
-import { FaBed } from "react-icons/fa";
+
 import {AnimatePresence,motion } from "framer-motion";
 import axios from "axios";
 import { FaHouseChimneyWindow } from "react-icons/fa6";
@@ -32,7 +31,7 @@ const Reservation = () => {
 
   const getUser = async () => {
     axios
-      .get(`http://localhost:4000/api/user/getuser/${user}`)
+      .get(`http://localhost:4000/user/user/getuser/${user}`)
       .then((response) => {
         console.log(response.data);
         setForm(response.data.user);
@@ -45,7 +44,7 @@ const Reservation = () => {
  
   const getHotel = () => {
     axios
-      .get(`http://localhost:4000/api/accommodation/${hotel}`)
+      .get(`http://localhost:4000/acc/acc/${hotel}`)
       .then((response) => {
         console.log(response.data);
         setHotels(response.data);
@@ -93,7 +92,7 @@ const Reservation = () => {
   const getRoomsPrices = () => {
     axios
       .get(
-        `http://localhost:4000/api/accommodation/roomPrices/${hotel}?startDate=${checkInDate}&endDate=${checkOutDate}`
+        `http://localhost:4000/acc/acc/roomPrices/${hotel}?startDate=${checkInDate}&endDate=${checkOutDate}`
       )
       .then((response) => {
         console.log(response.data);
@@ -191,7 +190,7 @@ const nights = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
       return;
     }
     console.log(reservationData)
-    axios.post(`http://localhost:4000/api/reserveracc/order/${user}/${hotel}`,
+    axios.post(`http://localhost:4000/reserveacc/reserveracc/order/${user}/${hotel}`,
        {reservationData}
     )
     .then(res => {

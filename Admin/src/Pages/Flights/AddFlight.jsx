@@ -32,7 +32,7 @@ export default function AddFlight() {
     ],
     
   });
-
+  const token=localStorage.getItem("admin");
   const handleSubmit = async (e) => {
     e.preventDefault();
     const today = new Date();
@@ -57,7 +57,12 @@ export default function AddFlight() {
       return;
     }
     try {
-      await axios.post('http://localhost:4000/api/flight/flights', flightData);
+      await axios.post('http://localhost:4000/flight/admin/flights',
+         flightData,
+        {headers:{
+          'Authorization':`Bearer ${token}`
+         }
+      });
       toast.success('Flight added successfully!');
     } catch (err) {
       console.error(err);
@@ -73,6 +78,7 @@ export default function AddFlight() {
       <div className="flex flex-col">
         <label className="font-bold text-xl text-violet-900">From</label>
         <select
+          
           className="input"
           value={flightData.from}
           onChange={(e) => setFlightData({ ...flightData, from: e.target.value })}
@@ -331,7 +337,36 @@ export default function AddFlight() {
           ))}
         </div>
       </div>
-
+ <div className="flex items-center gap-2">
+      <label className="font-bold text-xl text-violet-900">Weight Baggage (kg)</label>
+      <input
+        type="number"
+        className="input"
+        value={flightData?.Includedbaggage?.weight || 0}
+        onChange={e =>
+          setFlightData({
+            ...flightData,
+            Includedbaggage: {
+              ...flightData?.Includedbaggage,
+              weight: parseInt(e.target.value) || 0,
+            },
+          })
+        }
+      />
+    </div>
+          <div className="flex items-center gap-2">
+            <label className="font-bold text-xl text-violet-900">Cabin Allowance</label>
+            <input type="text" className='input' value={flightData?.cabinAllowance}
+              onChange={e => setFlightData({ ...flightData, cabinAllowance: e.target.value })} />
+          </div>
+          <div className="flex items-center gap-2">
+            <label className="font-bold text-xl text-violet-900">Refundable</label>
+            <input value={flightData?.refundable}
+            type="checkbox" checked={flightData?.refundable}
+              onChange={e => setFlightData({ ...flightData, refundable: e.target.checked })} />
+          </div>
+    
+        
       {/* Submit Button */}
       <div className="flex justify-center">
         <button type="submit" className="bg-violet-900 text-white px-6 py-2 rounded-lg text-xl">

@@ -1,6 +1,6 @@
 const Accommodation = require('../Models/Accomodation');
 const mongoose = require('mongoose');
-const Offer = require('../../Models/Offer');
+const Offer = require('../Models/Offer');
 const fs = require("fs");
 const path = require("path");
 const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
@@ -18,8 +18,8 @@ const addAccommodation = async (req, res) => {
     const rooms = typeof roomsData === 'string' ? JSON.parse(roomsData) : roomsData;
     const offer = offerData ? (typeof offerData === 'string' ? JSON.parse(offerData) : offerData) : null;
 
-    const accommodationImagePaths = accommodationImages.map(file => `/uploads/${file.filename}`);
-    const roomImagePaths = roomImages.map(file => `/uploads/${file.filename}`);
+    const accommodationImagePaths = accommodationImages.map(file => `${file.filename}`);
+    const roomImagePaths = roomImages.map(file => `${file.filename}`);
 
     let savedOffer = null;
     if (offer && Object.keys(offer).length > 0) {
@@ -71,14 +71,14 @@ const editAccommodation = async (req, res) => {
 
     const existingImages = req.body.existingImages || [];
     const oldImages = Array.isArray(existingImages) ? existingImages : [existingImages];
-    const newImagePaths = uploadedImages.map(file => `/uploads/${file.filename}`);
+    const newImagePaths = uploadedImages.map(file => `${file.filename}`);
     const allImages = [...oldImages, ...newImagePaths];
 
     const accommodation = typeof accommodationData === 'string' ? JSON.parse(accommodationData) : accommodationData;
     const rooms = typeof roomsData === 'string' ? JSON.parse(roomsData) : roomsData;
     const offer = offerData ? (typeof offerData === 'string' ? JSON.parse(offerData) : offerData) : null;
 
-    const roomImagePaths = roomImages.map(file => `/uploads/${file.filename}`);
+    const roomImagePaths = roomImages.map(file => `${file.filename}`);
 
     let updatedOffer;
     if (offer && Object.keys(offer).length > 0 && Object.values(offer).some(v => v !== "" && v !== null && v !== undefined)) {
@@ -124,6 +124,7 @@ const editAccommodation = async (req, res) => {
 const deleteAccommodation = async (req, res) => {
   try {
     const accommodation = await Accommodation.findByIdAndDelete(req.params.id);
+    console.log("accommodation:",accommodation)
     if (!accommodation) return res.status(404).json({ message: 'Accommodation not found' });
     res.status(200).json({ message: 'Accommodation deleted successfully' });
   } catch (err) {

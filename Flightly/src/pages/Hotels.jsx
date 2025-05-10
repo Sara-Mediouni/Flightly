@@ -42,7 +42,7 @@ const handlePageChange = (page) => {
     console.log(Name);
     axios
       .get(
-        `http://localhost:4000/api/accommodation/?type=Hotel&country=${Country}&name=${Name}`
+        `http://localhost:4000/acc/acc/?type=Hotel&country=${Country}&name=${Name}`
       )
       .then((response) => {
         console.log(response.data);
@@ -56,7 +56,7 @@ const handlePageChange = (page) => {
   
   const gethotels = () => {
     axios
-      .get("http://localhost:4000/api/accommodation/?type=Hotel")
+      .get("http://localhost:4000/acc/acc/?type=Hotel")
       .then((response) => {
         console.log(response.data);
         setHotels(response.data);
@@ -86,7 +86,7 @@ useEffect(() => {
 
   return (
     <div className="w-full h-full mt-40 my-10">
-      <h1 className="text-xl md:text-4xl text-white relative font-bold p-20">
+      <h1 className="text-4xl text-white relative font-bold p-20">
         The Best Stays, All in One Place
       </h1>
       <div className="grid items-center justify-center relative mx-10">
