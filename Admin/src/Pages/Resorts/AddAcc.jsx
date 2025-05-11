@@ -261,6 +261,7 @@ export default function Add() {
         <label className="font-bold text-xl text-violet-900">Type</label>
         <select
           className="input"
+          required
           value={AccommodationData.type}
           onChange={(e) =>
             setAccommodationData({ ...AccommodationData, type: e.target.value })
@@ -275,6 +276,7 @@ export default function Add() {
       <div className="flex flex-col">
         <label className="font-bold text-xl text-violet-900">Name</label>
         <input
+          required
           type="text"
           placeholder="Name"
           className="input"
@@ -286,6 +288,7 @@ export default function Add() {
       <div className="flex flex-col">
         <label className="font-bold text-xl text-violet-900">Country</label>
         <select
+          required
           className="input"
           value={AccommodationData.country}
           onChange={(e) =>
@@ -306,6 +309,7 @@ export default function Add() {
       <div className="flex flex-col">
         <label className="font-bold text-xl text-violet-900">Address</label>
         <input
+          required
           type="text"
           placeholder="Address"
           className="input"
@@ -320,6 +324,7 @@ export default function Add() {
       <div className="flex flex-col">
         <label className="font-bold text-xl text-violet-900">City</label>
         <input
+          required
           type="text"
           placeholder="City"
           className="input"
@@ -331,6 +336,7 @@ export default function Add() {
       <div className="flex flex-col">
         <label className="font-bold text-xl text-violet-900">Description</label>
         <input
+        required
           type="text"
           placeholder="Description"
           className="input"
@@ -345,6 +351,7 @@ export default function Add() {
       <div className="flex flex-col">
         <label className="font-bold text-xl text-violet-900">Phone</label>
         <input
+        required
           type="text"
           placeholder="Phone"
           className="input"
@@ -362,7 +369,8 @@ export default function Add() {
         </label>
         <input
           type="text"
-          placeholder="Description"
+          required
+          placeholder="Reservation Phone"
           className="input"
           onChange={(e) =>
             setAccommodationData({
@@ -376,6 +384,7 @@ export default function Add() {
         <label className="font-bold text-xl text-violet-900">Email</label>
         <input
           type="text"
+          required
           placeholder="Email"
           className="input"
           onChange={(e) =>
@@ -390,6 +399,7 @@ export default function Add() {
         <label className="font-bold text-xl text-violet-900">Stars</label>
         <input
           type="number"
+          required
           placeholder="Stars"
           className="input"
           onChange={(e) =>
@@ -437,6 +447,7 @@ export default function Add() {
         <input
           type="time"
           className="input"
+          required
           value={AccommodationData.checkInTime}
           onChange={(e) =>
             setAccommodationData({
@@ -454,6 +465,7 @@ export default function Add() {
         <input
           type="time"
           className="input"
+          required
           value={AccommodationData.checkOutTime}
           onChange={(e) =>
             setAccommodationData({
@@ -471,6 +483,7 @@ export default function Add() {
         <input
           type="number"
           className="input"
+          required
           value={AccommodationData.minAgeToCheckIn}
           onChange={(e) =>
             setAccommodationData({
@@ -488,6 +501,7 @@ export default function Add() {
         <input
           type="text"
           className="input"
+          required
           onChange={(e) =>
             setAccommodationData({
               ...AccommodationData,
@@ -540,6 +554,7 @@ export default function Add() {
             <div className="flex flex-col">
               <label className="font-bold text-xl text-violet-900">Name</label>
               <input
+              required
                 type="text"
                 placeholder="name"
                 value={a.name}
@@ -550,6 +565,7 @@ export default function Add() {
             <div className="flex flex-col">
               <label className="font-bold text-xl text-violet-900">Price</label>
               <input
+              required
                 type="number"
                 placeholder="Price"
                 value={a.price}
@@ -562,6 +578,7 @@ export default function Add() {
             <div className="flex flex-col">
               <label className="font-bold text-xl text-violet-900">Area</label>
               <input
+              required
                 type="number"
                 placeholder="Area"
                 value={a.area}
@@ -577,6 +594,7 @@ export default function Add() {
               </label>
               <input
                 type="text"
+                required
                 className="input"
                 value={a.amenities?.join(", ") || ""}
                 onChange={(e) => {
@@ -593,6 +611,7 @@ export default function Add() {
               </label>
               <input
                 type="number"
+                required
                 placeholder="Capacity"
                 value={a.capacity}
                 className="input"
@@ -607,6 +626,7 @@ export default function Add() {
               </label>
               <input
                 type="text"
+                required
                 placeholder="Description"
                 value={a.description}
                 className="input"
@@ -619,6 +639,7 @@ export default function Add() {
               </label>
               <input
                 type="number"
+                required
                 placeholder="Available Rooms"
                 value={a.availableRooms}
                 className="input"
@@ -634,6 +655,7 @@ export default function Add() {
                   <div key={idx} className="flex gap-6 gap-y-6">
                     <input
                       type="date"
+                      required
                       placeholder="Start Date"
                       value={season.StartDate}
                       onChange={(e) =>
@@ -651,6 +673,7 @@ export default function Add() {
                     />
                     <input
                       type="date"
+                      required
                       placeholder="End Date"
                       min={new Date().toISOString().split("T")[0]} 
                       value={season.EndDate}
@@ -682,6 +705,7 @@ export default function Add() {
                     <input
                       type="number"
                       placeholder="Price"
+                      required
                       value={season.price}
                       onChange={(e) =>
                         updateRoom(
@@ -697,6 +721,7 @@ export default function Add() {
                       className="input"
                     />
                     <input
+                    required
                       type="number"
                       min={1}
                       placeholder="Available Rooms"
@@ -747,6 +772,7 @@ export default function Add() {
                       type="number"
                       placeholder="Number"
                       value={bed.number}
+                      
                       onChange={(e) =>
                         updateRoom(
                           i,

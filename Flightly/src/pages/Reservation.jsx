@@ -190,7 +190,7 @@ const nights = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
       return;
     }
     console.log(reservationData)
-    axios.post(`http://localhost:4000/reserveacc/reserveracc/order/${user}/${hotel}`,
+    axios.post(`http://localhost:4000/reserveacc/reserveacc/order/${user}/${hotel}`,
        {reservationData}
     )
     .then(res => {
@@ -251,7 +251,7 @@ const nights = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
 
   <div className="w-1/2 flex items-center justify-center h-full">
     <img
-      src={`http://localhost:4000${hotels?.images[0]}`}
+      src={`http://localhost:4000/acc/uploads/${hotels?.images[0]}`}
       alt="Hotel"
       className="w-full rounded-xl shadow-lg object-cover max-h-[300px]"
     />

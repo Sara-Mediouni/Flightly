@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import CardsCollection from "../components/CardsCollection";
 import { PaginationDemo } from "../components/Pagination-ui";
 import { useSelector } from "react-redux";
@@ -20,7 +20,9 @@ const Resorts = () => {
        const indexOfLastResort = currentPage * ResortsPerPage;
        const indexOfFirstResort = indexOfLastResort - ResortsPerPage;
     // Number of hotels per page
-    const currentResorts = Resorts.slice(indexOfFirstResort, indexOfLastResort);
+    const currentResorts =useMemo(()=> 
+      Resorts.slice(indexOfFirstResort, indexOfLastResort),
+    [Resorts,indexOfFirstResort,indexOfLastResort])
     const handleNextPage = () => {
       if (currentPage < totalPages) setCurrentPage(currentPage + 1);
     };

@@ -13,14 +13,14 @@ const addAccommodation = async (req, res) => {
     if (!accommodationData || !roomsData) {
       return res.status(400).json({ message: "accommodationData and roomsData are required" });
     }
-
+   
     const accommodation = typeof accommodationData === 'string' ? JSON.parse(accommodationData) : accommodationData;
     const rooms = typeof roomsData === 'string' ? JSON.parse(roomsData) : roomsData;
     const offer = offerData ? (typeof offerData === 'string' ? JSON.parse(offerData) : offerData) : null;
-
+    const acc=await Accommodation.findOne({name:accommodation.name});
     const accommodationImagePaths = accommodationImages.map(file => `${file.filename}`);
     const roomImagePaths = roomImages.map(file => `${file.filename}`);
-
+    if (!acc){
     let savedOffer = null;
     if (offer && Object.keys(offer).length > 0) {
       savedOffer = await new Offer(offer).save();
@@ -47,7 +47,9 @@ const addAccommodation = async (req, res) => {
     await newAccommodation.save();
 
     res.status(201).json({ message: 'Accommodation and offer added successfully', accommodation: newAccommodation });
-  } catch (err) {
+  } else{
+    res.status(400).json({ message: 'Accommodation Already exists'})
+  }} catch (err) {
     console.error('Error adding accommodation:', err);
     if (err instanceof mongoose.Error.ValidationError) {
       return res.status(400).json({ message: 'Validation error', errors: err.errors });

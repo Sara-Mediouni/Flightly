@@ -92,7 +92,7 @@ const FlightReservation = () => {
             return;
         }
         console.log(flightData)
-        axios.post(`http://localhost:4000/reserveflight/reserveflight/reserver/order/${user}/${idFlight}`,
+        axios.post(`http://localhost:4000/reserveflight/reserveflight/order/${user}/${idFlight}`,
            {flightData}
         )
         .then(res => {

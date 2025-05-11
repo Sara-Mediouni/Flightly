@@ -9,7 +9,7 @@ const userSchema=new mongoose.Schema({
     country:{type:String, required:true},
     dateOfBirth:{type:String, required
 :true},
-    
+
     email:{type:String, required:true, unique:true},
     password:{type:String, required:true}
 },{minimize:false})

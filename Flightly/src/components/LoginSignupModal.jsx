@@ -59,7 +59,7 @@ const LoginSignupModal = ({ onClose }) => {
           dispatch(setToken(response.data.token));
           dispatch(setUser(jwtDecode(response.data.token).id));
           onClose()
-          navigate("/");
+        
         } else {
           setError(response.data.message);
         }

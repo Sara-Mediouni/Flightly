@@ -38,13 +38,15 @@ if (checkOut <= checkIn) {
     try{
     const userResponse = await axios.get(`http://localhost:4000/user/user/getuser/${userId}`);
     user= userResponse.data.user
+  
     }
     catch(error){
     console.log(`Error getting user ${userId}`);
     }
     try{
     const accget = await axios.get(`http://localhost:4000/acc/acc/${accId}`)
-      acc=accget.data.accommodation
+      acc=accget.data
+      console.log(accget.data)
      }
      catch(error){
     console.log(`Error getting user ${accId}`);
@@ -67,7 +69,7 @@ if (checkOut <= checkIn) {
     
       await newOrder.save();
      try{
-      const updateUser= await axios.put(`http://localhost:4000/user/user/updateuser/${userId}`,{ Accreservations: newOrder._id })
+      await axios.put(`http://localhost:4000/user/user/updateuser/${userId}`,{ Accreservations: newOrder._id })
      }
       catch(error){
         console.lg("Error updating user during reservation process")
@@ -206,14 +208,34 @@ const checkAvailabilityAndUpdate = (roomType, checkInDate, checkOutDate, numberR
   return { success: true };
 };
 
-// 👤 User Orders
+
 const userOrders = async (req, res) => {
   try {
-    const orders = await HotelReservationModel.find({ user: req.params.userId }).populate("accommodation");
-    res.json({ success: true,orders });
+    const orders = await HotelReservationModel.find({ user: req.params.userId });
+   
+    const FormatReserve = await Promise.all(
+  orders.map(async (order) => {
+    try {
+      const accRes = await axios.get(`http://localhost:4000/acc/acc/${order.accommodation}`);
+      return {
+        ...order.toObject(),
+        accommodation: accRes.data,
+      };
+    } catch (error) {
+      console.error("Error fetching accommodation:", error.message);
+      return {
+        ...order.toObject(),
+        accommodation: null, // ou un fallback
+      };
+    }
+  })
+);
+
+res.status(200).json(FormatReserve);
+    
   } catch (error) {
-    console.error("User Orders Error:", error);
-    res.status(500).json({ success: false, message: "Error fetching orders" });
+    console.error("User Reservations Error:", error);
+    res.status(500).json({ success: false, message: "Error fetching Rooms reservations" });
   }
 };
 
@@ -235,10 +257,10 @@ const listOrders = async (req, res) => {
             return {
               ...order.toObject(), 
               user: userRes.data.user,
-              accommodation: accRes.data.accommodation,
+              accommodation: accRes.data,
             };
           } catch (err) {
-            console.error(`Erreur lors du fetch des infos pour la commande ${order._id}`, err);
+            console.error(`Erreur lors du fetch des infos pour la reservation ${order._id}`, err);
             return order;
           }
         })
@@ -248,7 +270,7 @@ const listOrders = async (req, res) => {
       console.log(enrichedOrders);
       res.status(200).json(enrichedOrders)
     } catch (error) {
-      res.status(500).json("Erreur globale lors de la récupération des commandes :", error);
+      res.status(500).json("Erreur globale lors de la récupération des reservations :", error);
    
     }
     
