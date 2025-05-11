@@ -4,14 +4,24 @@ const flight = require("../Models/Flight");
 
 // Fonction pour ajouter un vol
 const addFlight = async (req, res) => {
+  
+ const flightData = req.body.flightData;
   try {
-    const flightData = req.body;
-    console.log(flightData); // Récupérer les données envoyées dans le corps de la requête
-    const flightAdded = new flight(flightData); // Créer un nouvel objet de vol avec les données
 
-    await flightAdded.save(); // Sauvegarder le vol dans la base de données
-    res.status(201).json({ message: 'Vol ajouté avec succès', flightAdded });
-  } catch (error) {
+    
+    const Flight=await flight.findOne({flightNumber:flightData.flightNumber});
+    if (!Flight)
+   { console.log(flightData); // Récupérer les données envoyées dans le corps de la requête
+    const flightAdded = new flight(flightData); // Créer un nouvel objet de vol avec les données
+    
+    await flightAdded.save();
+    console.log('flight:',flightAdded) // Sauvegarder le vol dans la base de données
+    res.status(201).json({ message: 'Vol ajouté avec succès', flight:flightAdded });}
+    else {
+    res.status(400).json({ message: 'Un Vol avec ce numéro existe déjà' })}
+
+    }
+   catch (error) {
     console.log(error)
     res.status(500).json({ message: 'Erreur lors de l\'ajout du vol', error });
   }
@@ -19,7 +29,6 @@ const addFlight = async (req, res) => {
 
 
 
-// Fonction pour supprimer un vol par son `id`
 const deleteFlight = async (req, res) => {
   try {
     const { id } = req.params;
@@ -105,7 +114,7 @@ const deleteFlight = async (req, res) => {
   const EditFlight=async(req, res)=>{
     try{
       const { id } = req.params;
-      const flightData = req.body;
+      const flightData = req.body.flightData;
       const updatedFlight = await flight.findByIdAndUpdate(id, flightData, { new: true });
   
       if (!updatedFlight) {

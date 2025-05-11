@@ -5,12 +5,12 @@ const flightSchema = new mongoose.Schema({
   to: { type: String, required: true },
   departurePlace: { type: String, required: true },
   departureAirport: { type: String, required: true },
-  returnPlace: { type: String }, // facultatif
-  returnAirport: { type: String }, // facultatif
+  returnPlace: { type: String, required: true }, 
+  returnAirport: { type: String, required: true },
   duration: { type: String, required: true },
   airline: { type: String, required: true },
   departureDate: { type: Date, required: true },
-  returnDate: { type: Date }, // facultatif
+  returnDate: { type: Date, required: true },
   flightType: { 
     type: String, 
     enum: ['one-way', 'round-trip'], 
@@ -19,7 +19,7 @@ const flightSchema = new mongoose.Schema({
   },
   onboardServices: { type: [String], default: [] },
   classes: [
-    {
+    {    _id: false,
       name: { type: String, required: true },
       price: { type: Number, required: true },
       availableSeats: { type: Number, required: true }
@@ -27,7 +27,7 @@ const flightSchema = new mongoose.Schema({
   ],
   flightNumber: { type: String, unique: true, required: true },
   departureTime: { type: String, required: true },
-  returnTime: { type: String }, // facultatif
+  returnTime: { type: String, required: true },
   Includedbaggage: {
     included: { type: Boolean, default: false },
     weight: { type: Number, default: 0 }

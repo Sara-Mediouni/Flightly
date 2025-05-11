@@ -155,16 +155,17 @@ const EditFlight = () => {
     
        
           <div className="flex flex-col gap-2">
-        <label className="font-bold text-xl text-violet-900">Transit</label>
-        <select onChange={e => setFlightData({ ...flightData, transit: e.target.value })} 
-        value={flightData?.transit}
-        className="h-[45px] border-2 px-4 border-violet-900 rounded-lg w-full">
-                    <option value="">Select option</option>
-                    <option value="stops">Stops</option>
-                    <option value="non-stop">Non-Stop</option>
-                    <option value="transit">Transit</option>
-                  </select>
-        
+        <label className="font-bold text-xl text-violet-900">Flight Type</label>
+        <select
+          value={flightData.flightType}
+          onChange={(e) => setFlightData({ ...flightData, flightType: e.target.value })}
+          className="h-[45px] border-2 px-4 border-violet-900 rounded-lg w-full"
+          required
+        >
+          <option value="">Select option</option>
+          <option value="one-way">One-way</option>
+          <option value="round-trip">Round-trip</option>
+        </select>
       </div>
       <div className="flex flex-col gap-4">
   <label className="font-bold text-xl text-violet-900">Flight Classes</label>

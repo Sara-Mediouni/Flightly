@@ -43,7 +43,7 @@ const addAccommodation = async (req, res) => {
       roomTypes: roomsWithImages,
       offers: savedOffer ? savedOffer._id : null
     });
-
+    console.log(newAccommodation)
     await newAccommodation.save();
 
     res.status(201).json({ message: 'Accommodation and offer added successfully', accommodation: newAccommodation });
@@ -112,14 +112,14 @@ const editAccommodation = async (req, res) => {
       },
       { new: true }
     );
-
+    console.log(updatedAccommodation)
     res.status(200).json({ message: 'Accommodation updated successfully', accommodation: updatedAccommodation });
   } catch (err) {
     console.error('Error updating accommodation:', err);
     if (err instanceof mongoose.Error.ValidationError) {
       return res.status(400).json({ message: 'Validation error', errors: err.errors });
     }
-    res.status(500).json({ message: 'Error updating accommodation', error: err });
+    res.status(500).json({message: 'Error updating accommodation', error: err });
   }
 };
 
@@ -127,7 +127,7 @@ const deleteAccommodation = async (req, res) => {
   try {
     const accommodation = await Accommodation.findByIdAndDelete(req.params.id);
     console.log("accommodation:",accommodation)
-    if (!accommodation) return res.status(404).json({ message: 'Accommodation not found' });
+    if (!accommodation) {return res.status(404).json({ message: 'Accommodation not found' })};
     res.status(200).json({ message: 'Accommodation deleted successfully' });
   } catch (err) {
     res.status(500).json({ message: 'Error deleting accommodation', error: err });
@@ -139,12 +139,12 @@ const filterAccommodations = async (req, res) => {
 
   let query = {};
   if (type) query.type = type;
-  if (country) query.country = { $regex: country, $options: "i" }; // recherche insensible à la casse
+  if (country) query.country = { $regex: country, $options: "i" }; 
   if (name) query.name = { $regex: name, $options: "i" };
 
   try {
     const accommodations = await Accommodation.find(query);
-    res.json(accommodations);
+    res.status(200).json(accommodations);
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }
@@ -152,9 +152,10 @@ const filterAccommodations = async (req, res) => {
 
 const getAccommodationById = async (req, res) => {
   try {
-    const accommodation = await Accommodation.findById(req.params.id).populate('offers');
+    const accommodation = await Accommodation.findById(req.params.id).populate('offers').exec();
+    console.log(accommodation);
     if (!accommodation) return res.status(404).json({ message: 'Accommodation not found' });
-    res.status(200).json(accommodation);
+    else {res.status(200).json(accommodation)};
   } catch (err) {
     res.status(500).json({ message: 'Error getting accommodation', error: err });
   }
