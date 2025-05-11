@@ -10,19 +10,30 @@ const MyReservations = () => {
     const [RoomReservations, setRoomreservations] = useState()
     const user=useSelector((state=>state.auth.user));
    const getmyreservations=()=>{
-    axios.get(`http://localhost:4000/api/reserver/getall/${user}`)
+    axios.get(`http://localhost:4000/reserveflight/reserveflight/getall/${user}`)
     .then((response)=>{
-      setreservations(response.data.orders)
+      setreservations(response.data)
       console.log(response.data)
     })
     .catch((error)=>{
       console.log(error)
     })
    }
+   function formatDate(isoDate) {
+  const date = new Date(isoDate);
+  return date.toLocaleString("en-US", {
+    year: "numeric",
+    month: "long",   // "May"
+    day: "numeric",  // "10"
+    hour: "2-digit", // "2 PM"
+    minute: "2-digit", // "30"
+    hour12: true     // AM/PM format
+  });
+}
    const getmyroomsreservations=()=>{
-    axios.get(`http://localhost:4000/api/reserveracc/getall/${user}`)
+    axios.get(`http://localhost:4000/reserveacc/reserveacc/getall/${user}`)
     .then((response)=>{
-      setRoomreservations(response.data.orders)
+      setRoomreservations(response.data)
       console.log(response.data)
     })
     .catch((error)=>{
@@ -74,7 +85,7 @@ const MyReservations = () => {
                   <p className="text-sm">Person Count: {res?.personCount?.Adultes + res?.personCount?.Enfants}</p>
                   <p className="text-sm font-semibold">Total: ${res.TotalPrice}</p>
                   <p className="text-sm font-semibold">Refundable: {res.refundable ? 'Yes' : 'No'}</p>
-                  <p className="text-sm font-semibold">Created At: {res.createdAt}</p>
+                  <p className="text-sm font-semibold">Created At: {formatDate(res.createdAt)}</p>
                 </div>
   
                 <div className="flex items-center justify-end">
@@ -111,7 +122,7 @@ const MyReservations = () => {
 
                 <div className="flex flex-col gap-4 text-gray-800">
                   <img
-                    src={`http://localhost:4000${res.accommodation.images[0]}`}
+                    src={`http://localhost:4000/acc/uploads/${res.accommodation.images[0]}`}
                     alt={res.accommodation.name}
                     className="w-full h-40 object-cover rounded-lg shadow"
                   />
@@ -134,7 +145,7 @@ const MyReservations = () => {
                   </div>
                   <p className="text-sm">Person Count: {res?.personCount?.Adultes + res?.personCount?.Enfants}</p>
                   <p className="text-sm font-semibold">Total: ${res.TotalPrice}</p>
-                  <p className="text-sm font-semibold">Created At: {res.createdAt}</p>
+                  <p className="text-sm font-semibold">Created At: {formatDate(res.createdAt)}</p>
                 </div>
   
                 <div className="flex items-center justify-end">

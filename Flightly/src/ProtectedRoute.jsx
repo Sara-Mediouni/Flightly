@@ -20,9 +20,7 @@ const ProtectedRoute = ({ children }) => {
     dispatch(openLoginPopup()); // Message d'attente avant la redirection
   }
 
-  if (!token) {
-    return <Navigate to="/" replace />; // Redirection vers la page de login/home
-  }
+ 
 
   return children;
 };

@@ -10,7 +10,6 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import Resort from "./components/Resort";
 import HotelDetails from "./pages/HotelInfo";
 import Resorts from "./pages/Resorts";
 import Reservation from "./pages/Reservation";
@@ -56,7 +55,6 @@ function App() {
         <Route path="/resorts" element={<Resorts />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
-        <Route path="/resort" element={<Resort />} />
         <Route path="/info" element={<HotelDetails />} />
         <Route path="/reservation" element={<ProtectedRoute><Reservation/></ProtectedRoute>} />
         <Route path="/reservflight" element={<ProtectedRoute><ReservationFlight /></ProtectedRoute>} />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import CardsCollection from "../components/CardsCollection";
 
 import { useSelector } from "react-redux";
@@ -20,7 +20,10 @@ const [minPrices, setMinPrices] = useState([]);
   const totalPages = Math.ceil(Hotels.length / HotelsPerPage); // ou selon le total de tes données
   const indexOfLastHotel = currentPage * HotelsPerPage;
   const indexOfFirstHotel = indexOfLastHotel - HotelsPerPage;
-  const currentHotels = Hotels.slice(indexOfFirstHotel, indexOfLastHotel);
+ const currentHotels = useMemo(() => 
+  Hotels.slice(indexOfFirstHotel, indexOfLastHotel),
+  [Hotels, indexOfFirstHotel, indexOfLastHotel]
+);
 
 const handleNextPage = () => {
   if (currentPage < totalPages) setCurrentPage(currentPage + 1);
@@ -33,7 +36,7 @@ const handlePrevPage = () => {
 const handlePageChange = (page) => {
   setCurrentPage(page);
 };
-  // Number of hotels per page
+
   const filterhotels = (e) => {
     e.preventDefault();
     JSON.stringify(Country);
@@ -42,10 +45,10 @@ const handlePageChange = (page) => {
     console.log(Name);
     axios
       .get(
-        `http://localhost:4000/api/accommodation/?type=Hotel&country=${Country}&name=${Name}`
+        `http://localhost:4000/acc/acc/?type=Hotel&country=${Country}&name=${Name}`
       )
       .then((response) => {
-        console.log(response.data);
+        
         setHotels(response.data);
       })
       .catch((error) => {
@@ -56,7 +59,7 @@ const handlePageChange = (page) => {
   
   const gethotels = () => {
     axios
-      .get("http://localhost:4000/api/accommodation/?type=Hotel")
+      .get("http://localhost:4000/acc/acc/?type=Hotel")
       .then((response) => {
         console.log(response.data);
         setHotels(response.data);
@@ -67,16 +70,16 @@ const handlePageChange = (page) => {
   };
 
 useEffect(()=>{
-  if (currentHotels && currentHotels?.length > 0) {
+  if (Hotels && Hotels?.length > 0) {
     const pricesPerHotel = currentHotels.map(hotel => {
       const prices = hotel.roomTypes.map(room => room.price);
       const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
       return minPrice;
     });
-    console.log(pricesPerHotel)
+   
     setMinPrices(pricesPerHotel);
   }
-},[currentHotels])
+},[Hotels])
 
 useEffect(() => {
   gethotels();
@@ -86,7 +89,7 @@ useEffect(() => {
 
   return (
     <div className="w-full h-full mt-40 my-10">
-      <h1 className="text-xl md:text-4xl text-white relative font-bold p-20">
+      <h1 className="text-4xl text-white relative font-bold p-20">
         The Best Stays, All in One Place
       </h1>
       <div className="grid items-center justify-center relative mx-10">

@@ -8,20 +8,30 @@ export default function ReservationAcc() {
   const [reserve, setReserve] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
+  const token=localStorage.getItem("admin")
 const handleDelete = async (id) => {
   try {
-    await axios.delete(`http://localhost:4000/api/r/flights/${id}`);
+    await axios.delete(`http://localhost:4000/flight/admin/flights/${id}`,
+        {
+         headers:{
+          'Authorization':`Bearer ${token}`
+         }}
+    );
     setReserve(reserve.filter((r) => r._id !== id));
-    getAllAcc(); // Refresh the r list after deletion
+    getAllAcc(); 
   } catch (error) {
-    console.error('Error deleting r:', error);
+    console.error('Error deleting :', error);
   }
 };
 
 const getAllAcc = async () => { 
   try {
-    const response = await axios.get('http://localhost:4000/api/reserveracc/');
+    const response = await axios.get('http://localhost:4000/reserveacc/admin/',
+        {
+         headers:{
+          'Authorization':`Bearer ${token}`
+         }}
+    );
     setReserve(response.data.data);
     console.log(response.data.data)
   } catch (error) {

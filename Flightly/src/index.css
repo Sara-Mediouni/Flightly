@@ -72,14 +72,8 @@ body{
 }
 
 
-.japan div{
-
-  width: 400px;
-  height: 400px;
-  clip-path: polygon(
-    10% 0%, 90% 0%, 100% 20%, 100% 80%,
-    90% 100%, 10% 100%, 0% 80%, 0% 20%
-  );
-  border-radius: 30px;
-
+.navbar-style{
+  @apply md:flex fixed md:static top-30 md:top-0 left-0 right-0 md:flex-row flex-col
+    items-center justify-center gap-6 md:gap-8 px-6 md:px-0 py-5 md:py-0 bg-white md:bg-transparent
+    z-[5000] shadow md:shadow-none;
 }

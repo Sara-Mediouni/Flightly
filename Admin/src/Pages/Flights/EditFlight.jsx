@@ -4,12 +4,19 @@ import countries from '../../data/countries';
 
 const EditFlight = () => {
     const id=localStorage.getItem('idflight');
+    
     console.log(id)
     const [flightData, setFlightData] = useState(null);
-    
+    const token=localStorage.getItem("admin");
     const getFlightData = async () => {
         try {
-            const response = await axios.get(`http://localhost:4000/api/flight/${id}`);
+            const response = await axios.get(`http://localhost:4000/flight/flight/${id}`
+              ,{
+         headers:{
+          'Authorization':`Bearer ${token}`
+         }
+      }
+            );
             const flight = response.data;
             setFlightData(flight);
         } catch (error) {
@@ -27,7 +34,11 @@ const EditFlight = () => {
         
     
         try {
-          await axios.put(`http://localhost:4000/api/flight/edit/${id}`, flightData);
+          await axios.put(`http://localhost:4000/flight/admin/edit/${id}`, flightData,
+          {headers:{
+          'Authorization':`Bearer ${token}`
+         }}
+          );
           alert('Flight Updated successfully!');
         } catch (err) {
           console.error(err);
@@ -111,25 +122,28 @@ const EditFlight = () => {
           </div>
      <div className="flex flex-col">
             <label className="font-bold text-xl text-violet-900">Departure Time</label>
-            <input type="time" className="input" value={flightData?.departureTime}
+            <input type="time" 
+
+            className="input" value={flightData?.departureTime}
               onChange={e => setFlightData({ ...flightData, departureTime: e.target.value })} />
           </div>
           <div className="flex flex-col">
             <label className="font-bold text-xl text-violet-900">Arrival Time</label>
-            <input type="time" className="input" value={flightData?.returnTime}
+            <input type="time"  
+            className="input" value={flightData?.returnTime}
               onChange={e => setFlightData({ ...flightData, returnTime: e.target.value })} />
           </div>
     
          
           <div className="flex flex-col">
             <label className="font-bold text-xl text-violet-900">Departure Date</label>
-            <input type="date" className="input" value={formatDateForInput(flightData?.departureDate)}
+            <input type="date"  min={new Date().toISOString().split("T")[0]} className="input" value={formatDateForInput(flightData?.departureDate)}
               onChange={e => setFlightData({ ...flightData, departureDate: e.target.value })} />
           </div>
     
           <div className="flex flex-col">
             <label className="font-bold text-xl text-violet-900">Arrival Date</label>
-            <input type="date" className="input" value={formatDateForInput(flightData?.returnDate)}
+            <input type="date" className="input" min={new Date().toISOString().split("T")[0]}  value={formatDateForInput(flightData?.returnDate)}
               onChange={e => setFlightData({ ...flightData, returnDate: e.target.value })} />
           </div>
           <div className="flex flex-col">
@@ -141,16 +155,17 @@ const EditFlight = () => {
     
        
           <div className="flex flex-col gap-2">
-        <label className="font-bold text-xl text-violet-900">Transit</label>
-        <select onChange={e => setFlightData({ ...flightData, transit: e.target.value })} 
-        value={flightData?.transit}
-        className="h-[45px] border-2 px-4 border-violet-900 rounded-lg w-full">
-                    <option value="">Select option</option>
-                    <option value="stops">Stops</option>
-                    <option value="non-stop">Non-Stop</option>
-                    <option value="transit">Transit</option>
-                  </select>
-        
+        <label className="font-bold text-xl text-violet-900">Flight Type</label>
+        <select
+          value={flightData.flightType}
+          onChange={(e) => setFlightData({ ...flightData, flightType: e.target.value })}
+          className="h-[45px] border-2 px-4 border-violet-900 rounded-lg w-full"
+          required
+        >
+          <option value="">Select option</option>
+          <option value="one-way">One-way</option>
+          <option value="round-trip">Round-trip</option>
+        </select>
       </div>
       <div className="flex flex-col gap-4">
   <label className="font-bold text-xl text-violet-900">Flight Classes</label>

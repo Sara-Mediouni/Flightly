@@ -69,94 +69,83 @@ const Navbar = () => {
   }, [currentScrollY, lastScrollY]);
 
   return (
-    <div className="top-0 flex justify-between items-center bg-transparent z-[5000] relative">
-    {/* Hamburger button (mobile only) */}
-    <div className="md:hidden absolute left-5 top-5 z-[6000]">
-      <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-violet-900">
-        {isMenuOpen ? <HiX size={30} /> : <HiMenu size={30} />}
-      </button>
-    </div>
-  
-    {/* LOGO */}
-    <div className='absolute left-1/2 transform -translate-x-1/2 md:translate-x-0 top-5 md:left-10 md:top-18 z-[6000] flex items-center font-Rangile font-bold text-white md:text-3xl text-2xl'>
-      Flightly <img src={plane} alt="airplane" className='w-5 h-5 md:h-10 md:w-10 ml-2' />
-    </div>
-  
-    {/* Avatar Icon */}
-    <div className="absolute md:right-5 right-5 md:top-18 top-5 z-[6000] flex items-center">
-      {token ? (
-        <div className="relative">
-          <button onClick={() => setOpen(!open)}>
-            <RxAvatar color="#231942" size={30} />
-          </button>
-  
-          {open && (
-            <div className="absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-lg z-50">
-              <ul className="py-2 text-sm text-gray-700">
-                <li>
-                  <button
-                    onClick={() => handleReservation()}
-                    className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                  >
-                    Reservations
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => handleProfile()}
-                    className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                  >
-                    Profile
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={handleLogout}
-                    className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                  >
-                    Logout
-                  </button>
-                </li>
-              </ul>
-            </div>
-          )}
-        </div>
-      ) : (
-        <button
-          onClick={() => dispatch(openLoginPopup())}
-          className="flex justify-center items-center px-2 font-bold text-white rounded-full border-2 border-violet700 w-20 md:w-30 h-10"
-        >
-          Login
-        </button>
-      )}
-    </div>
-  
-    {/* NAVBAR LINKS */}
-    <div
-      ref={navContainerRef}
-      className={`${
-        isMenuOpen ? 'flex' : 'hidden'
-      } md:flex flex-col md:flex-row font-bold min-w-fit md:left-50
-      fixed z-[5000] top-20 md:top-10 md:mx-auto px-6 md:px-10 
-      md:py-10 py-5 rounded-lg items-center justify-center space-y-5 md:space-y-0 
-      space-x-0 md:space-x-8 md:text-lg text-sm bg-white md:bg-transparent shadow md:shadow-none w-full md:w-auto max-w-screen-lg`}
-    >
-      {navItems.map((navItem, idx) => (
-        <a
-          key={`${idx}`}
-          href={navItem.link}
-          className="relative md:text-xl text-sm dark:text-violet900 
-          items-center flex dark:hover:text-white text-violet900"
-          onClick={() => setIsMenuOpen(false)}
-        >
-          <span className="block sm:hidden">{navItem.icon}</span>
-          <span className="!cursor-pointer text-sm md:text-xl">{navItem.name}</span>
-        </a>
-      ))}
-    </div>
-  
-    {showLoginPopup && <LoginSignupModal onClose={() => dispatch(closeLoginPopup())} />}
+ <div className="fixed top-8 w-full flex items-center justify-between px-6 py-4 bg-transparent z-[5000] ">
+
+  {/* Logo */}
+  <div className="flex items-center font-Rangile font-bold text-white text-2xl md:text-3xl z-[6000]">
+    Flightly
+    <img src={plane} alt="airplane" className="w-5 h-5 md:w-10 md:h-10 ml-2" />
   </div>
+
+  {/* Menu Burger (mobile) */}
+  <div className="md:hidden z-[6000]">
+    <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white">
+      {isMenuOpen ? <HiX size={30} /> : <HiMenu size={30} />}
+    </button>
+  </div>
+
+  {/* Navigation items */}
+  <div
+    ref={navContainerRef}
+    className={`${
+      isMenuOpen ? 'flex' : 'hidden'
+    } navbar-style`}
+  >
+    {navItems.map((navItem, idx) => (
+      <a
+        key={idx}
+        href={navItem.link}
+        onClick={() => setIsMenuOpen(false)}
+        className="flex items-center text-sm md:text-lg font-bold md:text-white text-violet900 hover:text-violet700"
+      >
+        <span className="block md:hidden mr-2">{navItem.icon}</span>
+        {navItem.name}
+      </a>
+    ))}
+  </div>
+
+  {/* Login / Avatar */}
+  <div className="relative z-[6000]">
+    {token ? (
+      <div className="relative">
+        <button onClick={() => setOpen(!open)}>
+          <RxAvatar color="#231942" size={30} />
+        </button>
+        {open && (
+          <div className="absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-lg z-50">
+            <ul className="py-2 text-sm text-gray-700">
+              <li>
+                <button onClick={handleReservation} className="w-full text-left px-4 py-2 hover:bg-gray-100">
+                  Reservations
+                </button>
+              </li>
+              <li>
+                <button onClick={handleProfile} className="w-full text-left px-4 py-2 hover:bg-gray-100">
+                  Profile
+                </button>
+              </li>
+              <li>
+                <button onClick={handleLogout} className="w-full text-left px-4 py-2 hover:bg-gray-100">
+                  Logout
+                </button>
+              </li>
+            </ul>
+          </div>
+        )}
+      </div>
+    ) : (
+      <button
+        onClick={() => dispatch(openLoginPopup())}
+        className="px-4 py-2 font-bold text-white border-2 border-violet700 rounded-full"
+      >
+        Login
+      </button>
+    )}
+  </div>
+
+  {showLoginPopup && <LoginSignupModal onClose={() => dispatch(closeLoginPopup())} />}
+</div>
+
   
   );
 };

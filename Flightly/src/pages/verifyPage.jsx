@@ -9,10 +9,10 @@ const VerifyPage = () => {
   const type=searchParams.get("type")
   const success = searchParams.get("success");
   const orderId = searchParams.get("orderId");
-  const url= type==="vol"? "reserver" : "reserveracc"
+  const url= type==="vol"? "reserveflight/reserveflight" : "reserveracc/reserveacc"
    const verify=()=>{
     
-    axios.get(`http://localhost:4000/api/${url}/verify/${orderId}/${success}`).then((response)=>
+    axios.get(`http://localhost:4000/${url}/verify/${orderId}/${success}`).then((response)=>
     
       console.log(response))
     .catch((error)=>{

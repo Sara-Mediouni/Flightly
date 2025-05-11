@@ -47,7 +47,7 @@ const LoginSignupModal = ({ onClose }) => {
     const endpoint = showLogin ? "login" : "register";
     console.log(endpoint);
     axios
-      .post(`http://localhost:4000/api/user/${endpoint}`, form)
+      .post(`http://localhost:4000/user/user/${endpoint}`, form)
       .then((response) => {
         if (response.data.success) {
           console.log(response.data.message);
@@ -59,7 +59,7 @@ const LoginSignupModal = ({ onClose }) => {
           dispatch(setToken(response.data.token));
           dispatch(setUser(jwtDecode(response.data.token).id));
           onClose()
-          navigate("/");
+        
         } else {
           setError(response.data.message);
         }

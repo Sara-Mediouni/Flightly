@@ -8,10 +8,16 @@ export default function ListFlight() {
   const [flights, setFlights] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
+  const token=localStorage.getItem("admin");
 const handleDelete = async (id) => {
   try {
-    await axios.delete(`http://localhost:4000/api/flight/flights/${id}`);
+    await axios.delete(`http://localhost:4000/flight/admin/flights/${id}`,
+         {
+         headers:{
+          'Authorization':`Bearer ${token}`
+         }
+      }
+    );
     setFlights(flights.filter((flight) => flight._id !== id));
     getAllFlights(); // Refresh the flight list after deletion
   } catch (error) {
@@ -21,7 +27,7 @@ const handleDelete = async (id) => {
 
 const getAllFlights = async () => { 
   try {
-    const response = await axios.get('http://localhost:4000/api/flight/allflights');
+    const response = await axios.get('http://localhost:4000/flight/flight/allflights');
     setFlights(response.data);
   } catch (error) {
     console.error('Error fetching flights:', error);
@@ -54,7 +60,7 @@ const handleEdit = async (id) => {
           <div key={index} className="bg-white shadow-md rounded-lg p-4 space-y-2">
             <h2 className="text-xl font-semibold text-violet-800">{flight.flightNumber}</h2>
             <p className="text-gray-700"><strong>Type:</strong> {flight.flightType}</p>
-            <p className="text-gray-700"><strong>Services:</strong> {flight.onboardServices}</p>
+            <p className="text-gray-700"><strong>Services:</strong> {flight.onboardServices.join(',')}</p>
 
             <p className="text-gray-700"><strong>Fom:</strong> {flight.from}</p>
             <p className="text-gray-700"><strong>To:</strong> {flight.to}</p>

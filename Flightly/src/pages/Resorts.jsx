@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import CardsCollection from "../components/CardsCollection";
 import { PaginationDemo } from "../components/Pagination-ui";
 import { useSelector } from "react-redux";
@@ -20,7 +20,9 @@ const Resorts = () => {
        const indexOfLastResort = currentPage * ResortsPerPage;
        const indexOfFirstResort = indexOfLastResort - ResortsPerPage;
     // Number of hotels per page
-    const currentResorts = Resorts.slice(indexOfFirstResort, indexOfLastResort);
+    const currentResorts =useMemo(()=> 
+      Resorts.slice(indexOfFirstResort, indexOfLastResort),
+    [Resorts,indexOfFirstResort,indexOfLastResort])
     const handleNextPage = () => {
       if (currentPage < totalPages) setCurrentPage(currentPage + 1);
     };
@@ -40,7 +42,7 @@ const Resorts = () => {
       console.log(Name);
       axios
         .get(
-          `http://localhost:4000/api/accommodation/?type=Resort&country=${Country}&name=${Name}`
+          `http://localhost:4000/acc/acc/?type=Resort&country=${Country}&name=${Name}`
         )
         .then((response) => {
           console.log(response.data);
@@ -54,7 +56,7 @@ const Resorts = () => {
     
     const getresorts = () => {
       axios
-        .get("http://localhost:4000/api/accommodation/?type=Resort")
+        .get("http://localhost:4000/acc/acc/?type=Resort")
         .then((response) => {
           console.log(response.data);
           setResorts(response.data);
@@ -81,7 +83,7 @@ const Resorts = () => {
     }, []);
   return (
  <div className="w-full h-full mt-40 my-10">
-       <h1 className="text-xl md:text-4xl text-white relative font-bold p-20">
+       <h1 className="text-4xl text-white relative font-bold p-20">
          The Best Stays, All in One Place
        </h1>
        <div className="grid items-center justify-center relative mx-10">

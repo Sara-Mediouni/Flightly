@@ -8,7 +8,6 @@ import {
   FaSpa,
   FaUmbrellaBeach,
 } from "react-icons/fa6";
-import { PiClockClockwiseBold } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import {
   MdLocalParking,
@@ -29,13 +28,14 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet"; // Pour personnaliser le marqueur si tu veux
 import { LucideClockAlert } from "lucide-react";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 // Exemple de longitude (Paris)
 const HotelDetails = () => {
   const hotel = JSON.parse(localStorage.getItem("details"));
   const [hotels, setHotels] = useState(null);
-  const [checkInDate, setCheckInDate] = useState(null);
-  const [checkOutDate, setCheckOutDate] = useState(null);
+  const [checkInDate, setCheckInDate] = useState("");
+  const [checkOutDate, setCheckOutDate] = useState("");
   const [rooms, setRooms] = useState(null);
   const [Type, setType] = useState(null);
   const handleCheckInDate = (e) => {
@@ -83,9 +83,11 @@ const HotelDetails = () => {
       localStorage.setItem("checkout", checkOutDate);
       navigate("/reservation");
     } else {
-      toast(
-        "Les dates doivent être valides."
-      );
+      Swal.fire({
+                 title: "Check In and Check out are invalid",
+                 icon: "error",
+                 
+               });
     }
   };
 
@@ -98,7 +100,7 @@ const HotelDetails = () => {
   const getRoomsPrices = () => {
     axios
       .get(
-        `http://localhost:4000/api/accommodation/roomPrices/${hotel}?startDate=${checkInDate}&endDate=${checkOutDate}`
+        `http://localhost:4000/acc/acc/roomPrices/${hotel}?startDate=${checkInDate}&endDate=${checkOutDate}`
       )
       .then((response) => {
         console.log(response.data);
@@ -120,7 +122,7 @@ const HotelDetails = () => {
   }
   const getHotel = () => {
     axios
-      .get(`http://localhost:4000/api/accommodation/${hotel}`)
+      .get(`http://localhost:4000/acc/acc/${hotel}`)
       .then((response) => {
         console.log(response.data);
         setHotels(response.data);
@@ -144,7 +146,7 @@ const HotelDetails = () => {
     getHotel();
     getRoomsPrices();
   }, []);
-  console.log(hotels);
+
   return (
     <div className="bg-violet-300 h-full mt-40 text-violet900 px-8 py-16 relative my-10 mx-10">
       {/* Hotel Info */}
@@ -153,7 +155,7 @@ const HotelDetails = () => {
         <>
           <div className="h-full w-full ">
             <img
-              src={`http://localhost:4000${hotels?.images[0]}`}
+              src={`http://localhost:4000/acc/uploads/${hotels?.images[0]}`}
               alt="Hotel"
               className="w-full h-[500px] object-cover rounded-2xl"
             />
@@ -329,7 +331,7 @@ const HotelDetails = () => {
                         type="date"
                         min={new Date().toISOString().split("T")[0]} 
                         className="border-2 border-violet900 text-violet900 font-medium rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all duration-200"
-                        value={checkInDate}
+                        value={checkInDate || ""}
                         onChange={handleCheckInDate}
                       />
                     </div>
@@ -344,7 +346,7 @@ const HotelDetails = () => {
                         type="date"
                         min={new Date().toISOString().split("T")[0]} 
                         className="border-2 border-violet900 text-violet900 font-medium rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all duration-200"
-                        value={checkOutDate}
+                        value={checkOutDate || ""}
                         onChange={handleCheckOutDate}
                       />
                     </div>
@@ -372,7 +374,7 @@ const HotelDetails = () => {
                     <img
                       className="w-full h-72 object-cover rounded-2xl"
                       alt={room.name}
-                      src={`http://localhost:4000${room?.roomImages[0]}`}
+                      src={`http://localhost:4000/acc/uploads/${room?.roomImages[0]}`}
                     />
 
                     {/* Info */}
@@ -442,13 +444,13 @@ const HotelDetails = () => {
             <div className=" grid grid-rows-2 gap-4">
               <div className="w-full h-[240px]">
                 <img
-                  src={`http://localhost:4000${hotels?.images[1]}`}
+                  src={`http://localhost:4000/acc/uploads/${hotels?.images[1]}`}
                   className="w-full h-full object-cover rounded-2xl"
                 />
               </div>
               <div className="w-full h-[240px]">
                 <img
-                  src={`http://localhost:4000${hotels?.images[2]}`}
+                  src={`http://localhost:4000/acc/uploads/${hotels?.images[2]}`}
                   className="w-full h-full object-cover rounded-2xl"
                 />
               </div>
