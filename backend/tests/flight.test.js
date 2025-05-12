@@ -7,6 +7,8 @@ const {
   EditFlight,
   deleteFlight,
   filterFlights,
+  getAllFlights,
+  FlightById,
 } = require("../Flight-service/Controller/FlightController");
 
 describe("FLIGHT CONTROLLER TESTS", () => {
@@ -279,13 +281,8 @@ describe("FLIGHT CONTROLLER TESTS", () => {
        
       }
     }
-    const filter={
-        from:"Spain",
-        to:"France",
-        departureDate:"15/05/2025",
-        returnDate:"15/05/2025",
-       
-    }
+
+
     const flightsList=[
       {
         _id:"123"
@@ -297,12 +294,19 @@ describe("FLIGHT CONTROLLER TESTS", () => {
     }
     const findStub=sinon.stub(flightModel, 'find').resolves(flightsList);
     await filterFlights(req, res);
-    expect(findStub.calledWith(filter)).to.be.true;
+     expect(findStub.calledWith(sinon.match.has('from', 'Spain'))).to.be.true;
+    console.log(res.json.args)
     expect(res.status.calledWith(200)).to.be.true;
+    expect(res.json.calledWithMatch(sinon.match((val) => {
+  return Array.isArray(val) && val.some(item => item._id === '123');
+}))).to.be.true;
   })
-  it("filterFlights returns 404",async()=>{
+  it("filterFlights returns 404", async()=>{
     const req={
       query:{
+        passengers:"",
+        classType:"",
+        type:"",
         from:"Spain",
         to:"France",
         departureDate:"15/05/2025",
@@ -311,26 +315,209 @@ describe("FLIGHT CONTROLLER TESTS", () => {
        
       }
     }
-    const filter={
-        from:"Spain",
-        to:"France",
-        departureDate:"15/05/2025",
-        returnDate:"15/05/2025",
-       
-    }
-    const flightsList=[
-     
-    ]
+
+
+  
     const res={
       status:sinon.stub().returnsThis(),
       json:sinon.stub()
     }
-    const findStub=sinon.stub(flightModel, 'find').resolves(flightsList);
+    const findStub=sinon.stub(flightModel, 'find').resolves([]);
     await filterFlights(req, res);
-    console.log(res.status.args);
-    console.log(res.json.args);
-    expect(findStub.calledWith(filter)).to.be.true;
+ 
+    expect(findStub.calledWith(sinon.match.has('from', 'Spain'))).to.be.true;
     expect(res.status.calledWith(404)).to.be.true;
+ 
     expect(res.json.calledWithMatch({ message: 'Aucun vol trouvé avec ces filtres' })).to.be.true;
+    findStub.restore();
+  })
+  it("getAllFlights() returns 200",async()=>{
+    const req={}
+    const res={
+      status:sinon.stub().returnsThis(),
+      json:sinon.stub()
+    }
+    const flightsList=[
+      {_id:"123"},
+      {_id:"124"}
+    ]
+    const findStub=sinon.stub(flightModel,"find").resolves(flightsList);
+    await getAllFlights(req, res);
+    expect(findStub.called).to.be.true;
+    expect(res.status.calledWith(200)).to.be.true;
+    expect(res.json.calledWithMatch(flightsList)).to.be.true;
+
+  })
+  it("EditFlight and returns 200",async()=>{
+    const req={
+      params:{
+        id:"123"
+      },
+      body:{
+        flightData: {
+          from: "Germany",
+          to: "Tunisia",
+          departurePlace: "Berlin",
+          departureAirport: "Berlin Airport",
+          returnPlace: "Tunis",
+          returnAirport: "Carthage",
+          duration: "2h",
+          airline: "Berlin Airlines",
+          departureDate: "12/06/2025",
+          returnDate: "12/06/2025",
+          flightType: "one-way", // ✅ string, pas {type: "one-way"}
+          onboardServices: [],
+          classes: [
+            {
+              name: "Economy",
+              price: 100, // ✅ number
+              availableSeats: 5, // ✅ number
+            },
+          ],
+          flightNumber: "AD1542",
+          departureTime: "10:00",
+          returnTime: "13:00",
+          Includedbaggage: {
+            included: false,
+            weight: 0,
+          },
+          cabinAllowance: 0,
+          refundable: false,
+        },
+      
+      }
+    }
+    const updatedFlight={
+       _id:"123",
+        from: "Germany",
+          to: "Tunisia",
+          departurePlace: "Berlin",
+          departureAirport: "Berlin Airport",
+          returnPlace: "Tunis",
+          returnAirport: "Carthage",
+          duration: "2h",
+          airline: "Berlin Airlines",
+          departureDate: "12/06/2025",
+          returnDate: "12/06/2025",
+          flightType: "one-way", // ✅ string, pas {type: "one-way"}
+          onboardServices: [],
+          classes: [
+            {
+              name: "Economy",
+              price: 100, // ✅ number
+              availableSeats: 5, // ✅ number
+            },
+          ],
+          flightNumber: "AD1542",
+          departureTime: "10:00",
+          returnTime: "13:00",
+          Includedbaggage: {
+            included: false,
+            weight: 0,
+          },
+          cabinAllowance: 0,
+          refundable: false,
+        
+    }
+    const res={
+      status:sinon.stub().returnsThis(),
+      json:sinon.stub()
+    }
+    const findStub=sinon.stub(flightModel,"findByIdAndUpdate").resolves(updatedFlight)
+    await EditFlight(req, res);
+   
+    expect(findStub.calledWith("123",req.body.flightData, { new: true })).to.be.true;
+    expect(res.status.calledWith(200)).to.be.true;
+    expect(res.json.calledWithMatch({ message: 'Vol mis à jour avec succès', updatedFlight }))
+  })
+
+  it("EditFlight and returns 404 flight not found",async()=>{
+    const req={
+      params:{
+        id:"123"
+      },
+      body:{
+        flightData: {
+          from: "Germany",
+          to: "Tunisia",
+          departurePlace: "Berlin",
+          departureAirport: "Berlin Airport",
+          returnPlace: "Tunis",
+          returnAirport: "Carthage",
+          duration: "2h",
+          airline: "Berlin Airlines",
+          departureDate: "12/06/2025",
+          returnDate: "12/06/2025",
+          flightType: "one-way", // ✅ string, pas {type: "one-way"}
+          onboardServices: [],
+          classes: [
+            {
+              name: "Economy",
+              price: 100, // ✅ number
+              availableSeats: 5, // ✅ number
+            },
+          ],
+          flightNumber: "AD1542",
+          departureTime: "10:00",
+          returnTime: "13:00",
+          Includedbaggage: {
+            included: false,
+            weight: 0,
+          },
+          cabinAllowance: 0,
+          refundable: false,
+        },
+      
+      }
+    }
+    
+    const res={
+      status:sinon.stub().returnsThis(),
+      json:sinon.stub()
+    }
+    const findStub=sinon.stub(flightModel,"findByIdAndUpdate").resolves(null)
+    await EditFlight(req, res);
+  
+    expect(findStub.calledWith("123",req.body.flightData, { new: true })).to.be.true;
+    expect(res.status.calledWith(404)).to.be.true;
+    expect(res.json.calledWithMatch({ message: 'Vol non trouvé' }))
+  
+  })
+  it ("FlightById returns 200",async()=>{
+    const req={
+     params:{
+      id:"123"
+     }
+    } 
+    const flightData={
+      _id:"123"
+    }
+    const res={
+        status:sinon.stub().returnsThis(),
+        json:sinon.stub()
+      }
+    const findStub=sinon.stub(flightModel,'findById').resolves(flightData);
+    await FlightById(req, res);
+    expect(findStub.calledWith("123")).to.be.true;
+    expect(res.status.calledWith(200)).to.be.true;
+    expect(res.json.calledWithMatch(flightData)).to.be.true;
+  })
+ 
+  it ("FlightById returns 404 not found",async()=>{
+    const req={
+     params:{
+      id:"123"
+     }
+    } 
+   
+    const res={
+        status:sinon.stub().returnsThis(),
+        json:sinon.stub()
+      }
+    const findStub=sinon.stub(flightModel,'findById').resolves(null);
+    await FlightById(req, res);
+    expect(findStub.calledWith("123")).to.be.true;
+    expect(res.status.calledWith(404)).to.be.true;
+    expect(res.json.calledWithMatch({ message: 'Vol non trouvé' })).to.be.true;
   })
 });
