@@ -459,6 +459,7 @@ describe("FLIGHT RESERVATION CONTROLLER UNIT TESTS", () => {
     const findByIdAndUpdateStub=sinon.stub(ReserveModel, 'findByIdAndUpdate').resolves(order);
     await updateStatus(req, res);
     expect(findByIdAndUpdateStub.calledWith("152",{status:"Pending"})).to.be.true;
-    
+    expect(res.status.calledWith(200)).to.be.true;
+    expect(res.json.calledWithMatch({ success: true, message: "Status updated" })).to.be.true;
   })
 });
