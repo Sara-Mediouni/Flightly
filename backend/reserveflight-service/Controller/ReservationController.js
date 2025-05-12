@@ -2,11 +2,10 @@ const Stripe = require("stripe");
 const ReserveModel = require("../Models/Reservation");
 
 const mongoose = require("mongoose");
-const stripe = new Stripe(process.env.STRIPE_API_KEY);
 const axios = require("axios");
+const stripe = require("../stripeClient");
 const frontend_url = "http://localhost:5173";
 
-// 🛒 Place Order
 const placeOrder = async (req, res) => {
   try {
     let user;
@@ -27,15 +26,13 @@ const placeOrder = async (req, res) => {
         axios.get(`http://localhost:4000/user/user/getuser/${userId}`),
         axios.get(`http://localhost:4000/flight/flight/${flightId}`),
       ]);
-      console.log(userResponse.data)
-      console.log(flightResponse.data)
+
       user = userResponse.data.user;
+
       Flight = flightResponse.data;
     } catch (error) {
       console.log("Error getting flight & user:", error.message);
     }
-
-    console.log(req.body);
 
     if (user && Flight) {
       const newOrder = new ReserveModel({
@@ -51,14 +48,17 @@ const placeOrder = async (req, res) => {
 
       await newOrder.save();
 
-      try {
+      {
+        /* try {
         const updateUser = await axios.put(
           `http://localhost:4000/user/user/updateuser/${userId}`,
           { reservations: newOrder._id }
         );
       } catch (error) {
-        console.lg("Error updating user during reservation process");
+        console.log("Error updating user during reservation process");
+      } */
       }
+
       const line_items = [
         {
           price_data: {
@@ -78,9 +78,9 @@ const placeOrder = async (req, res) => {
         cancel_url: `${frontend_url}/verify?type=vol&success=false&orderId=${newOrder._id}`,
       });
 
-      res.json({ success: true, session_url: session.url });
+      return res.status(200).json({ success: true, session_url: session.url });
     } else {
-      res
+      return res
         .status(404)
         .json({ success: false, message: "User or flight not found" });
     }
@@ -90,35 +90,39 @@ const placeOrder = async (req, res) => {
   }
 };
 
-// ✅ Verify Payment
 const verifyOrder = async (req, res) => {
   const { orderId, success } = req.params;
   let flight;
   try {
     if (success === "true") {
-      // ✅ Mettre à jour l'état de paiement
       const order = await ReserveModel.findById(orderId);
+
       if (!order)
         return res
           .status(404)
           .json({ success: false, message: "Order not found" });
 
-      // ✅ Mettre à jour les sièges disponibles
       const totalPassengers =
         order.personCount.Adultes + order.personCount.Enfants;
       try {
         const flightf = await axios.get(
           `http://localhost:4000/flight/flight/${order.flight}`
         );
+
         flight = flightf.data.flightData;
+        if (!flight) {
+          res
+            .status(404)
+            .json({ message: "Error while getting flight for verification " });
+        }
       } catch (error) {
         console.log("Error while getting flight for verification ", error);
       }
 
-      for (let i = 0; i < flight.classes.length; i++) {
-        let cls = flight.classes[i];
+      for (let i = 0; i < flight?.classes.length; i++) {
+        let cls = flight?.classes[i];
 
-        if (cls.name === order.flightClass) {
+        if (cls.name === order?.flightClass) {
           if (cls.availableSeats < totalPassengers) {
             return res
               .status(400)
@@ -128,9 +132,8 @@ const verifyOrder = async (req, res) => {
           cls.availableSeats -= totalPassengers;
 
           if (cls.availableSeats === 0) {
-            // Supprimer la classe
             flight.classes.splice(i, 1);
-            i--; // Très important si tu modifies le tableau pendant la boucle
+            i--;
           }
         }
       }
@@ -139,14 +142,13 @@ const verifyOrder = async (req, res) => {
 
       order.paymentStatus = "Paid";
       await order.save();
-
-      res.json({
+      res.status(200).json({
         success: true,
         message: "Payment successful and seats updated",
       });
     } else {
       await ReserveModel.findByIdAndDelete(orderId);
-      res.json({
+      res.status(400).json({
         success: false,
         message: "Payment canceled and order deleted",
       });
@@ -162,31 +164,29 @@ const userOrders = async (req, res) => {
   try {
     const orders = await ReserveModel.find({ user: req.params.userId });
 
-   const formatOrders=await Promise.all(
-     orders.map(async (order) => {
-      try {
-     
-      const userResponse = await axios.get(
-        `http://localhost:4000/flight/flight/${order.flight}`
-      );
-      return {
-        ...order.toObject(),
-        flight: userResponse.data,
-      };
-    }
- catch(error){
-      console.error(`Error fetching flight:${order.flight}`, error.message);
-      return {
-        ...order.toObject(),
-        flight: null, 
-      };
-    }} )
-    
-  )
-   res.status(200).json(formatOrders);
+    const formatOrders = await Promise.all(
+      orders.map(async (order) => {
+        try {
+          const userResponse = await axios.get(
+            `http://localhost:4000/flight/flight/${order.flight}`
+          );
+          return {
+            ...order.toObject(),
+            flight: userResponse.data,
+          };
+        } catch (error) {
+          console.error(`Error fetching flight:${order.flight}`, error.message);
+          return {
+            ...order.toObject(),
+            flight: null,
+          };
+        }
+      })
+    );
+    return res.status(200).json(formatOrders);
   } catch (error) {
     console.error("User Orders Error:", error);
-    res.status(500).json({ success: false, message: "Error fetching orders" });
+    return res.status(500).json({ success: false, message: "Error fetching orders" });
   }
 };
 
@@ -194,6 +194,7 @@ const userOrders = async (req, res) => {
 const listOrders = async (req, res) => {
   try {
     const orders = await ReserveModel.find({});
+    console.log(orders)
     const formatOrders = await Promise.all(
       orders.map(async (order) => {
         try {
@@ -230,7 +231,7 @@ const updateStatus = async (req, res) => {
     await ReserveModel.findByIdAndUpdate(req.body.reserveId, {
       status: req.body.status,
     });
-    res.json({ success: true, message: "Status updated" });
+    res.status(200).json({ success: true, message: "Status updated" });
   } catch (error) {
     console.error("Status Update Error:", error);
     res.status(500).json({ success: false, message: "Error updating status" });

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tests/flight.test.js --exit --trace-warnings"
+    "test": "mocha tests/flightreservation.test.js --exit --trace-warnings"
   },
   "keywords": [],
   "author": "",

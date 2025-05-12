@@ -5,6 +5,7 @@ const {connectDB} =require ('./db.js');
 const path = require('path');
 const morgan = require('morgan');
 const helmet = require("helmet");
+
 const { ErrorHandler } = require('./middleware/ErrorHandler');
 
 const app=express();
