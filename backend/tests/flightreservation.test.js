@@ -462,4 +462,23 @@ describe("FLIGHT RESERVATION CONTROLLER UNIT TESTS", () => {
     expect(res.status.calledWith(200)).to.be.true;
     expect(res.json.calledWithMatch({ success: true, message: "Status updated" })).to.be.true;
   })
+   it ("updateStatus() et returns 500",async()=>{
+    const req = {
+     params: {
+    orderId: "invalidId"
+  }
+};
+    
+    const res={
+      status:sinon.stub().returnsThis(),
+      json:sinon.stub()
+    }
+    const findByIdAndUpdateStub=sinon.stub(ReserveModel, 'findByIdAndUpdate').resolves(null);
+    await updateStatus(req, res);
+    console.log(res.status.args);
+    console.log(res.json.args)
+    expect(findByIdAndUpdateStub.calledWith("invalidId", {status:"Pending"})).to.be.true;
+    expect(res.status.calledWith(500)).to.be.true;
+    expect(res.json.calledWithMatch({ success: false, message: 'Error updating status' })).to.be.true;
+  })
 });

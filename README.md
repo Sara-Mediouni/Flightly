@@ -1,77 +1,110 @@
-# 🌍✈️ **Flightly**
+# 🌍✈️ Flightly
 
+![GitHub Actions](https://img.shields.io/github/actions/workflow/status/Sara-Mediouni/Flightly/test.yml?style=for-the-badge)
+![Tests](https://img.shields.io/badge/Tests-Passing-brightgreen?style=for-the-badge&logo=jest)
+![Coverage](https://img.shields.io/badge/Coverage-85%25-yellowgreen?style=for-the-badge)
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb)
+![Stripe](https://img.shields.io/badge/Stripe-635BFF?style=for-the-badge&logo=stripe&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
-![Stripe](https://img.shields.io/badge/Stripe-635BFF?style=for-the-badge&logo=stripe&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer--Motion-EF008F?style=for-the-badge&logo=framer&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+
 ---
 
-## 📚 **Table des matières**
+## 📚 Table des matières
 
 - [✨ Présentation](#-présentation)
 - [🛠️ Stack Technique](#️-stack-technique)
 - [📸 Aperçu](#-aperçu)
+- [🧱 Architecture & Services](#-architecture--services)
+- [🧪 Tests](#-tests)
 - [🚀 Lancer localement](#-lancer-localement)
 - [📋 Fonctionnalités principales](#-fonctionnalités-principales)
-- [⚠️ Remarque](#️-remarque)
-
-
----
-
-## ✨ **Présentation**
-
-Une plateforme moderne de réservation de **vols** ✈️, **hôtels** 🏨 et **resorts** 🏖️, conçue pour offrir une expérience fluide, rapide et agréable aux utilisateurs.
+- [⚠️ Remarques](#️-remarques)
 
 ---
 
-## 🛠️ **Stack Technique**
+## ✨ Présentation
 
-- **Frontend** : React.js
-- **Backend** : Node.js + Express.js
-- **Base de données** : MongoDB
-- **Paiement** : Stripe API (ou autre service)
-
-
+**Flightly** est une plateforme moderne de réservation de **vols**, **hébergements** et **resorts**. Elle propose une expérience rapide, fluide et agréable pour l’utilisateur comme pour l’administrateur.
 
 ---
 
-## 📸 **Aperçu**
+## 🛠️ Stack Technique
 
-
-> (https://flightly-21xm.vercel.app)
+| Frontend   | Backend            | Auth            | DB      | Paiement |
+|------------|--------------------|------------------|---------|----------|
+| React + Tailwind + Vite | Node.js + Express | JWT        | MongoDB | Stripe   |
 
 ---
 
-## 🚀 **Lancer localement**
+## 📸 Aperçu
+
+> 🔗 [Démo en ligne](https://flightly-21xm.vercel.app)
+
+---
+
+## 🧱 Architecture & Services
+
+Flightly est conçu en architecture **microservices**, avec 5 services principaux :
+
+| Service             | Description                        | Port par défaut |
+|---------------------|------------------------------------|------------------|
+| ✈️ Flight Service    | Gestion des vols                   | 4001             |
+| 👤 User Service      | Gestion des utilisateurs           | 4003             |
+| 🏨 Accommodation     | Gestion des hébergements/resorts   | 4002             |
+| 🧾 Reservation Vols  | Gestion des réservations de vols   | 4004             |
+| 🧾 Reservation Acc   | Gestion des réservations logement  | 4005             |
+
+---
+
+## 🧪 Tests
+
+Des **tests unitaires Node.js** ont été intégrés pour valider la logique métier des services principaux :
+
+- ✅ Couverture sur les services de réservation
+
+- 🧪 Librairies : Mocha, Chai, Sinon
+
+---
+
+## 🚀 Lancer localement
 
 ```bash
 # 1. Cloner le dépôt
 git clone https://github.com/Sara-Mediouni/Flightly.git
 
 # 2. Accéder au projet
-cd flightly
+cd Flightly
 
 # 3. Installer les dépendances
-cd flightly && npm install
-cd backend && npm install
-cd admin && npm install
+cd frontend && npm install
+cd ../backend && npm install
+cd ../admin && npm install
 
-# 4. Configurer le backend
-Créer un fichier `.env` dans `/backend` avec :
--MONGO_URI=your_mongodb_uri
--JWT_SECRET=your_jwt_secret
--STRIPE_API_KEY=your_stripe_secret
-- PORT = 4000 (ou autre)
+# 4. Configurer les .env dans chaque service
+# Exemple (backend/.env)
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+STRIPE_API_KEY=your_stripe_secret
+PORT=4000
 
-# 5. Lancer l'application
-# Démarrer backend
-nodemon server
+# 5. Lancer les microservices dans des terminaux séparés
+cd backend/User-service && nodemon server
+cd backend/Flight-service && nodemon server
+cd backend/aAcc-service && nodemon server
+cd backend/reserveflight-service && nodemon server
+cd backend/reserve-service && nodemon server
+cd backend/api-gateway && nodemon server
+# 6. Lancer le frontend
+cd frontend && npm run dev
 
-# Démarrer frontend (dans un autre terminal)
-npm run dev
----
+# 7. Lancer l’admin dashboard
+cd admin && npm run dev
+
 ```
  ## 📋 Fonctionnalités principales
  ##  Utilisateur
@@ -82,6 +115,7 @@ npm run dev
 -👤 Gestion du compte utilisateur.
 
 -🧾 Historique et suivi des réservations.
+
 ##  Admin Dashboard
 -📦 Gestion des vols et hébergements.
 
@@ -92,4 +126,10 @@ npm run dev
 ---
 
 ## ⚠️ Remarque
-Nécessite MongoDB et Stripe pour finaliser les commandes.
+⚙️ Les réservations nécessitent MongoDB et Stripe.
+
+🛡️ Sécurité basée sur JWT & rôles.
+
+## 🙌 Crédits
+
+Développé avec ❤️ par @Sara-Mediouni
