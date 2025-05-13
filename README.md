@@ -105,7 +105,7 @@ PORT=4000
 # 5. Lancer les microservices dans des terminaux séparés
 cd backend/User-service && nodemon server
 cd backend/Flight-service && nodemon server
-cd backend/aAcc-service && nodemon server
+cd backend/Acc-service && nodemon server
 cd backend/reserveflight-service && nodemon server
 cd backend/reserve-service && nodemon server
 cd backend/api-gateway && nodemon server
