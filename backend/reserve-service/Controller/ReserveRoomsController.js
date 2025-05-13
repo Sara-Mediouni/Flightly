@@ -250,10 +250,10 @@ const listOrders = async (req, res) => {
         orders.map(async (order) => {
           try {
             const [userRes, accRes] = await Promise.all([
-              axios.get(`http://localhost:4000/user/user/${order.userId}`),
+              axios.get(`http://localhost:4000/user/user/getuser/${order.userId}`),
               axios.get(`http://localhost:4000/acc/acc/${order.accommodation}`),
             ]);
-    
+            console.log(userRes)
             return {
               ...order.toObject(), 
               user: userRes.data.user,
@@ -261,14 +261,14 @@ const listOrders = async (req, res) => {
             };
           } catch (err) {
             console.error(`Erreur lors du fetch des infos pour la reservation ${order._id}`, err);
-            return order;
+         
           }
         })
       );
     
     
       console.log(enrichedOrders);
-      res.status(200).json(enrichedOrders)
+      res.status(200).json({ success: true, data:enrichedOrders})
     } catch (error) {
       res.status(500).json("Erreur globale lors de la récupération des reservations :", error);
    
@@ -279,13 +279,19 @@ const listOrders = async (req, res) => {
 
 const updateStatus = async (req, res) => {
   try {
-    await HotelReservationModel.findByIdAndUpdate(req.body.reserveId, { status: req.body.status });
-    res.json({ success: true, message: "Status updated" });
+    const { reserveId, status } = req.body;
+    const updated = await HotelReservationModel.findByIdAndUpdate(reserveId, { status:status }, { new: true });
+
+    if (!updated) {
+      return res.status(500).json({ success: false, message: 'Error updating status' });
+    }
+
+    res.status(200).json({ success: true, message: "Status updated" });
   } catch (error) {
-    console.error("Status Update Error:", error);
-    res.status(500).json({ success: false, message: "Error updating status" });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
+
 
 
 module.exports = {

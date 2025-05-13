@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const axios = require("axios");
 const ReserveModel = require("../reserve-service/Models/HotelReservationSchema");
 const stripe = require("../reserve-service/stripeClient");
-const { placeOrder, verifyOrder } = require("../reserve-service/Controller/ReserveRoomsController");
+const { placeOrder, verifyOrder, listOrders, updateStatus, userOrders } = require("../reserve-service/Controller/ReserveRoomsController");
 const Accommodation = require("../Acc-service/Models/Accomodation");
 
 
@@ -307,4 +307,145 @@ describe("FLIGHT RESERVATION CONTROLLER UNIT TESTS", () => {
       ).to.be.true;
       findByIdStub.restore();
     });
+    it("userOrders() returns 200 and orders", async () => {
+        const req = {
+          params: {
+            userId: "123",
+          },
+        };
+        const order1 = {
+          accommodation: "acc1",
+          toObject: () => ({ _id: "1", accommodation: "acc1" }),
+        };
+    
+        const order2 = {
+          accommodation: "acc1",
+          toObject: () => ({ _id: "2", accommodation: "acc2" }),
+        };
+        const fakeAcc1 = { name: "A123" };
+        const fakeAcc2 = { name: "B456" };
+        const formatOrders = [
+          {
+            order1,
+            accommodation: { name: "A123" },
+          },
+          {
+            order2,
+            accommodation: { name: "B456" },
+          },
+        ];
+    
+        const res = {
+          status: sinon.stub().returnsThis(),
+          json: sinon.stub(),
+        };
+    
+        const axiosStub = sinon.stub(axios, "get");
+        const flightStub1 = axiosStub
+          .withArgs(`http://localhost:4000/acc/acc/${order1.accommodation}`)
+          .resolves({ data: fakeAcc1 });
+        const flightStub2 = axiosStub
+          .withArgs(`http://localhost:4000/acc/acc/${order2.accommodation}`)
+          .resolves({ data: fakeAcc2 });
+    
+        const findStub = sinon
+          .stub(ReserveModel, "find")
+          .resolves([order1, order2]);
+        await userOrders(req, res);
+    
+        expect(flightStub1.called).to.be.true;
+        expect(flightStub2.called).to.be.true;
+        expect(findStub.called).to.be.true;
+        console.log(res.status.args);
+        console.log(res.json.args);
+    
+        expect(res.status.calledWith(200)).to.be.true;
+        expect(res.json.calledWithMatch(sinon.match.array)).to.be.true;
+        findStub.restore();
+      });
+    it("listOrders() and returns 200", async () => {
+        const req = {};
+        const order1 = {
+          userId: "125",
+          accommodation: "485",
+          toObject: () => ({ _id: "1", accommodation: "485", userId: "125" }),
+        };
+        const orders = [
+          {
+            userId: "125",
+            accommodation: "485",
+            toObject: () => ({ _id: "1", accommodation: "485", userId: "125" }),
+          },
+        ];
+        const res = {
+          status: sinon.stub().returnsThis(),
+          json: sinon.stub(),
+        };
+        const urlUsers = `http://localhost:4000/user/user/getuser/${order1.userId}`;
+        const urlacc = `http://localhost:4000/acc/acc/${order1.accommodation}`;
+        const axiosgetStub = sinon.stub(axios, "get");
+        sinon.stub(ReserveModel, "find").resolves(orders);
+        const userStub = axiosgetStub
+          .withArgs(urlUsers)
+          .resolves({ data: { user: { _id: "152" } } });
+        const accStub = axiosgetStub
+          .withArgs(urlacc)
+          .resolves({ data: { _id: "152" } });
+        await listOrders(req, res);
+        console.log(res.status.args)
+        console.log(res.json.args)
+
+        expect(userStub.calledOnce).to.be.true;
+        expect(accStub.calledOnce).to.be.true;
+        expect(res.status.calledWith(200)).to.be.true;
+        expect(
+          res.json.calledWithMatch({
+            success: true,
+            data: sinon.match.array,
+          })
+        ).to.be.true;
+      });
+      it ("updateStatus() et returns 200",async()=>{
+        const req={
+          body:{
+            reserveId:"152",
+            status:"Pending"
+          }
+    
+        }
+        const order={
+          _id:"152",
+          status:"Pending"
+        }
+        const res={
+          status:sinon.stub().returnsThis(),
+          json:sinon.stub()
+        }
+        const findByIdAndUpdateStub=sinon.stub(ReserveModel, 'findByIdAndUpdate').resolves(order);
+        await updateStatus(req, res);
+        expect(findByIdAndUpdateStub.calledOnceWith("152",{status:"Pending"},{new:true})).to.be.true;
+          console.log(res.status.args);
+        console.log(res.json.args)
+        expect(res.status.calledWith(200)).to.be.true;
+        expect(res.json.calledWithMatch({ success: true, message: "Status updated" })).to.be.true;
+      })
+       it ("updateStatus() et returns 500",async()=>{
+        const req = {
+         body: {
+        reserveId: "invalidId",
+        status:"Pending"
+      }
+    };
+        
+        const res={
+          status:sinon.stub().returnsThis(),
+          json:sinon.stub()
+        }
+        const findByIdAndUpdateStub=sinon.stub(ReserveModel, 'findByIdAndUpdate').resolves(null);
+        await updateStatus(req, res);
+      
+        expect(findByIdAndUpdateStub.calledOnce).to.be.true;
+        expect(res.status.calledWith(500)).to.be.true;
+        expect(res.json.calledWithMatch({ success: false, message: 'Error updating status' })).to.be.true;
+      })
 })
