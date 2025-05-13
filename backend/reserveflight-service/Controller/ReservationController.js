@@ -227,14 +227,18 @@ const listOrders = async (req, res) => {
 
 // 🛠 Update Order Status
 const updateStatus = async (req, res) => {
+  
   try {
-    await ReserveModel.findByIdAndUpdate(req.body.reserveId, {
-      status: req.body.status,
-    });
+    const { reserveId, status } = req.body;
+    const updated = await ReserveModel.findByIdAndUpdate(reserveId, { status:status }, { new: true });
+
+    if (!updated) {
+      return res.status(500).json({ success: false, message: 'Error updating status' });
+    }
+
     res.status(200).json({ success: true, message: "Status updated" });
   } catch (error) {
-    console.error("Status Update Error:", error);
-    res.status(500).json({ success: false, message: "Error updating status" });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 

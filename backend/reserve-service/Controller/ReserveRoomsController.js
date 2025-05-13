@@ -2,9 +2,9 @@ const Stripe = require("stripe");
 const HotelReservationModel = require("../Models/HotelReservationSchema");
 
 const mongoose=require('mongoose')
-const stripe = new Stripe(process.env.STRIPE_API_KEY);
 
-const axios=require("axios")
+const axios=require("axios");
+const stripe = require("../stripeClient");
 const frontend_url = "http://localhost:5173";
 
 
@@ -68,12 +68,7 @@ if (checkOut <= checkIn) {
       });
     
       await newOrder.save();
-     try{
-      await axios.put(`http://localhost:4000/user/user/updateuser/${userId}`,{ Accreservations: newOrder._id })
-     }
-      catch(error){
-        console.lg("Error updating user during reservation process")
-      }
+    
 
   
     const line_items = [
@@ -95,7 +90,7 @@ if (checkOut <= checkIn) {
       cancel_url: `${frontend_url}/verify?type=acc&success=false&orderId=${newOrder._id}`,
     });
 
-    res.json({ success: true, session_url: session.url });
+    res.status(200).json({ success: true, session_url: session.url });
   } else {
     res.status(404).json({ success: false, message: "User or Accommodation not found" });
   }
@@ -116,6 +111,11 @@ const verifyOrder = async (req, res) => {
       try{
       const getacc = await axios.get(`http://localhost:4000/acc/acc/${order.accommodation}`); // 🔁 fix
           acc=getacc.data.accommodation;
+       if (!acc) {
+          return res
+            .status(404)
+            .json({ message: "Error while getting accommodation for verification " });
+        }
         }    
      
           catch(error){
@@ -143,11 +143,11 @@ const verifyOrder = async (req, res) => {
       order.paymentStatus = "Paid";
       await order.save();
 
-      res.json({ success: true, message: "Payment successful and room availability updated" });
+      res.status(200).json({ success: true, message: "Payment successful and room availability updated" });
 
     } else {
       await HotelReservationModel.findByIdAndDelete(orderId);
-      res.json({ success: false, message: "Payment canceled and order deleted" });
+      res.status(400).json({ success: false, message: "Payment canceled and order deleted" });
     }
 
   } catch (error) {

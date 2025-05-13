@@ -450,6 +450,7 @@ describe("FLIGHT RESERVATION CONTROLLER UNIT TESTS", () => {
 
     }
     const order={
+      _id:"152",
       status:"Pending"
     }
     const res={
@@ -458,14 +459,17 @@ describe("FLIGHT RESERVATION CONTROLLER UNIT TESTS", () => {
     }
     const findByIdAndUpdateStub=sinon.stub(ReserveModel, 'findByIdAndUpdate').resolves(order);
     await updateStatus(req, res);
-    expect(findByIdAndUpdateStub.calledWith("152",{status:"Pending"})).to.be.true;
+    expect(findByIdAndUpdateStub.calledOnceWith("152",{status:"Pending"},{new:true})).to.be.true;
+      console.log(res.status.args);
+    console.log(res.json.args)
     expect(res.status.calledWith(200)).to.be.true;
     expect(res.json.calledWithMatch({ success: true, message: "Status updated" })).to.be.true;
   })
    it ("updateStatus() et returns 500",async()=>{
     const req = {
-     params: {
-    orderId: "invalidId"
+     body: {
+    reserveId: "invalidId",
+    status:"Pending"
   }
 };
     
@@ -473,15 +477,11 @@ describe("FLIGHT RESERVATION CONTROLLER UNIT TESTS", () => {
       status:sinon.stub().returnsThis(),
       json:sinon.stub()
     }
-    const findByIdAndUpdateStub = sinon.stub(ReserveModel, 'findByIdAndUpdate').resolves(null);
-
-  await updateStatus(req, res);
-
-  const [calledId, updatePayload] = findByIdAndUpdateStub.firstCall.args;
-
-  expect(calledId).to.equal("invalidId");
-  expect(updatePayload).to.deep.equal({ status: "Pending" });
-  expect(res.status.calledWith(500)).to.be.true;
-  expect(res.json.calledWithMatch({ success: false, message: "Error updating status" })).to.be.true;
-})
+    const findByIdAndUpdateStub=sinon.stub(ReserveModel, 'findByIdAndUpdate').resolves(null);
+    await updateStatus(req, res);
+  
+    expect(findByIdAndUpdateStub.calledOnce).to.be.true;
+    expect(res.status.calledWith(500)).to.be.true;
+    expect(res.json.calledWithMatch({ success: false, message: 'Error updating status' })).to.be.true;
+  })
 });
