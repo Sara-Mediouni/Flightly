@@ -1,8 +1,9 @@
 # 🌍✈️ Flightly
 
 
-![Tests](https://img.shields.io/badge/Tests-Passing-brightgreen?style=for-the-badge&logo=jest)
-![Coverage](https://img.shields.io/badge/Coverage-85%25-yellowgreen?style=for-the-badge)
+![Tests](https://img.shields.io/badge/tests-passing-brightgreen?style=for-the-badge)
+![Coverage](https://img.shields.io/badge/coverage-90%25-yellowgreen?style=for-the-badge)
+![GitHub Actions](https://img.shields.io/github/actions/workflow/status/Sara-Mediouni/AstroBite/tests.yml?style=for-the-badge)
 
 ![Stripe](https://img.shields.io/badge/Stripe-635BFF?style=for-the-badge&logo=stripe&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
@@ -22,6 +23,7 @@
 - [🧱 Architecture & Services](#-architecture--services)
 - [🧪 Tests](#-tests)
 - [🚀 Lancer localement](#-lancer-localement)
+- [📂 Organisation du projet](#-organisation-du-projet)
 - [📋 Fonctionnalités principales](#-fonctionnalités-principales)
 - [⚠️ Remarques](#️-remarques)
 
@@ -35,9 +37,17 @@
 
 ## 🛠️ Stack Technique
 
-| Frontend   | Backend            | Auth            | DB      | Paiement |
-|------------|--------------------|------------------|---------|----------|
-| React + Tailwind + Vite | Node.js + Express | JWT        | MongoDB | Stripe   |
+## 🛠️ Stack Technique
+
+| Domaine         | Outils & Technologies                          |
+|-----------------|------------------------------------------------|
+| Frontend        | React, TailwindCSS, Vite, Framer Motion        |
+| Backend         | Node.js, Express.js                            |
+| Authentification| JWT                                            |
+| Base de données | MongoDB                                        |
+| CI/CD           | GitHub Actions                                 |
+| Tests           | Mocha, Chai, Sinon                             |
+| Architecture    | Microservices + API Gateway                    |
 
 ---
 
@@ -106,6 +116,27 @@ cd frontend && npm run dev
 cd admin && npm run dev
 
 ```
+
+## 📂 Organisation du projet
+
+```bash
+/Flightly
+│
+├── flightly               # Interface utilisateur principale
+├── admin                  # Dashboard d'administration
+└── backend
+    ├── Acc-service        
+    ├── api-gateway      
+    ├── Flight-service       
+    ├── reserve-service           
+    ├── reserveflight-service 
+    └── User-service 
+```
+
+
+
+
+
  ## 📋 Fonctionnalités principales
  ##  Utilisateur
 -🔎 Recherche de vols et hébergements.
