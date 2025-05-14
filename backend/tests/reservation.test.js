@@ -8,7 +8,7 @@ const { placeOrder, verifyOrder, listOrders, updateStatus, userOrders } = requir
 const Accommodation = require("../Acc-service/Models/Accomodation");
 
 
-describe("FLIGHT RESERVATION CONTROLLER UNIT TESTS", () => {
+describe("ACCOMMODATION RESERVATION CONTROLLER UNIT TESTS", () => {
   afterEach(() => {
     sinon.restore();
   });
