@@ -216,7 +216,9 @@ const Flights = () => {
       Flights?.map((flight, index) => {
         return (
           <>
-            <div className="p-5 grid grid-cols-[1fr_1fr]  text-violet900 md:text-xl rounded-2xl shadow-2xl w-full bg-violet-300  mt-30">
+            <div key={flight._id} className="p-5 grid grid-cols-[1fr_1fr]  
+            text-violet900 md:text-xl rounded-2xl shadow-2xl 
+            w-full bg-violet-300  mt-30">
               <div className="w-full ">
                 <h1 className="font-bold">{flight.airline}</h1>
                 <div className="flex gap-10  text-gray-600">
@@ -227,7 +229,7 @@ const Flights = () => {
               <div className="md:text-lg text-sm gap-2 grid md:grid-cols-3">
               <div className="flex flex-col gap-1">
   {flight.classes.map((cls, idx) => (
-    <div key={idx} className=" px-3 py-1 rounded-lg text-sm text-violet900 border-2 border-violet900 shadow-sm">
+    <div key={cls.name} className=" px-3 py-1 rounded-lg text-sm text-violet900 border-2 border-violet900 shadow-sm">
       <p className="font-semibold">{cls.name}</p>
       <div className="flex justify-between text-xs">
         <span>{cls.availableSeats} seats</span>
@@ -264,7 +266,7 @@ const Flights = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
                 {/* FROM */}
                 <div className="flex flex-col ">
-                  <h1 className="font-bold text-xl">{flight.from}</h1>
+                  <h1 className="font-bold text-xl" data-testid="from">{flight.from}</h1>
                   <span className="text-xl text-gray-600">
                     {flight.departurePlace}
                   </span>
@@ -280,7 +282,7 @@ const Flights = () => {
 
 
                 <div className="flex flex-col items-end lg:items-start">
-                  <h1 className="font-bold text-xl">{flight.to}</h1>
+                  <h1 className="font-bold text-xl" data-testid="to">{flight.to}</h1>
                   <span className="text-xl text-gray-600">
                     {flight.returnPlace}
                   </span>

@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import Swal from 'sweetalert2'
-
+import React from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setToken, setUser } from "../redux/authSlice";
@@ -73,7 +72,7 @@ const LoginSignupModal = ({ onClose }) => {
     e.preventDefault();
 
     if (!showLoginPopup && form.password !== form.confirmPassword) {
-      setError("Les mots de passe ne correspondent pas.");
+      setError("Passwords do not match.");
       return;
     }
 
@@ -88,7 +87,7 @@ const LoginSignupModal = ({ onClose }) => {
       city,
       country,
     } = form;
-    console.log(showLogin ? "Connexion" : "Inscription", {
+    console.log(showLogin ? "Login" : "Signup", {
       email,
       password,
       firstname,
@@ -112,7 +111,7 @@ const LoginSignupModal = ({ onClose }) => {
           onClick={onClose}
           className="absolute top-2 right-3 text-gray-500 hover:text-red-500"
         >
-          <IoCloseSharp />
+          x
         </button>
 
         <div className="flex justify-around mb-4">
@@ -144,6 +143,7 @@ const LoginSignupModal = ({ onClose }) => {
                     type="text"
                     name="firstname"
                     required
+                    placeholder="First Name"
                     value={form.firstname}
                     onChange={handleChange}
                     className="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-violet900"
@@ -156,6 +156,8 @@ const LoginSignupModal = ({ onClose }) => {
                     name="lastname"
                     required
                     value={form.lastname}
+                    placeholder="Last Name"
+
                     onChange={handleChange}
                     className="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-violet900"
                   />
@@ -168,6 +170,7 @@ const LoginSignupModal = ({ onClose }) => {
                 <input
                   type="date"
                   name="dateOfBirth"
+
                   required
                   value={form.dateOfBirth}
                   onChange={handleChange}
@@ -181,6 +184,8 @@ const LoginSignupModal = ({ onClose }) => {
             <input
               type="email"
               name="email"
+              placeholder="Email"
+
               required
               value={form.email}
               onChange={handleChange}
@@ -193,6 +198,8 @@ const LoginSignupModal = ({ onClose }) => {
             <input
               type="password"
               name="password"
+              placeholder="Password"
+
               required
               value={form.password}
               onChange={handleChange}
@@ -280,7 +287,7 @@ const LoginSignupModal = ({ onClose }) => {
             type="submit"
             className="w-full bg-violet900 text-white py-2 rounded-lg hover:bg-violet-300 transition"
           >
-            {showLoginPopup ? "Se connecter" : "S'inscrire"}
+            {showLoginPopup ? "Log In" : "Sign up"}
           </button>
         </form>
       </div>
