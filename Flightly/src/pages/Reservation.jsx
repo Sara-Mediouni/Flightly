@@ -85,10 +85,6 @@ const Reservation = () => {
     });
   };
   
-  
-  
-  
-
   const getRoomsPrices = () => {
     axios
       .get(
@@ -111,7 +107,7 @@ const Reservation = () => {
   };
 
   useEffect(() => {
-    // Crée le tableau des chambres sélectionnées à partir de selectedRooms
+
     const array = Object.entries(selectedRooms).map(([name, number]) => ({
       name,
       number,
@@ -119,9 +115,8 @@ const Reservation = () => {
     console.log(checkOutDate);
     console.log(checkInDate);
     const checkIn = new Date(checkInDate);
-const checkOut = new Date(checkOutDate);
-const nights = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
-    // Calcule le prix total
+    const checkOut = new Date(checkOutDate);
+    const nights = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
 
     const totalPrice = Object.entries(selectedRooms).reduce(
       (total, [name, number]) => {
@@ -230,7 +225,7 @@ const nights = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
       <strong>Location:</strong> {hotels?.city}, {hotels?.address},{" "}
       {hotels?.country}
     </p>
-
+    
     <p className="text-md text-gray-600">
       <strong>Amenities:</strong>{" "}
       {hotels?.features &&
@@ -266,8 +261,7 @@ const nights = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
             Book Your Stay
           </h1>
 
-          <form
-            onSubmit={(e) => {
+          <form onSubmit={(e) => {
               handleSubmit(e);
             }}
           >
@@ -280,7 +274,7 @@ const nights = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
                 {rooms?.map((room, index) => {
                   const isSelected = selectedRooms[room.name] !== undefined;
                   return (
-                    <div key={index}>
+                    <div key={index} data-testid="room_1">
                       <div
                         className={`flex items-center justify-between p-4 border rounded-md shadow-md cursor-pointer transition-all duration-300 ${
                           isSelected ? "bg-violet-100" : "bg-white"
