@@ -30,8 +30,7 @@ const Reservation = () => {
   });
 
   const getUser = async () => {
-    axios
-      .get(`http://localhost:4000/user/user/getuser/${user}`)
+    axios.get(`http://localhost:4000/user/user/getuser/${user}`)
       .then((response) => {
         console.log(response.data);
         setForm(response.data.user);

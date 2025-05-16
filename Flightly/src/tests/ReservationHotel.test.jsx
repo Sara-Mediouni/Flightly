@@ -4,9 +4,25 @@ import axios from "axios";
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
 import Reservation from "../pages/Reservation";
+import authReducer from "../redux/authSlice"
 import React from "react";
-vi.mock("axios");
-axios.get = vi.fn();
+import { configureStore } from "@reduxjs/toolkit";
+vi.mock("axios", () => ({
+  default: {
+    get: vi.fn(),
+    post: vi.fn(),
+  },
+}));
+const customStore = configureStore({
+  reducer: {
+    auth: authReducer,
+  },
+  preloadedState: {
+    auth: {
+      user: "152", 
+    },
+  },
+});
 describe("RESERVATION HOTEL PAGE", () => {
   beforeEach(() => {
     vi.spyOn(Storage.prototype, "getItem").mockImplementation((key) => {
@@ -17,6 +33,7 @@ describe("RESERVATION HOTEL PAGE", () => {
       if (key==="checkin") return "12/06/2025";
       if (key==="checkout") return "14/06/2025"
     });
+   
     (axios.get).mockImplementation((url) => {
   if (url.includes("/acc/1524")) {
     return Promise.resolve({  data: {
@@ -83,12 +100,12 @@ describe("RESERVATION HOTEL PAGE", () => {
 });
    
   });
-  afterEach(() => {
+    afterEach(() => {
     vi.resetAllMocks();
   });
   it("Fill reservation form and redirect to payment page", async () => {
     render(
-      <Provider store={store}>
+      <Provider store={customStore}>
         <Reservation />
       </Provider>
     );
@@ -126,6 +143,22 @@ describe("RESERVATION HOTEL PAGE", () => {
         })
          
       })
+      const reservationBtn=screen.getByRole("button",{name: /Complete Reservation/i});
+      fireEvent.click(reservationBtn);
+      waitFor(() => {
+      expect(axios.post).toHaveBeenCalledWith(
+        expect.stringContaining("/order/152/1524"),
+        expect.objectContaining({
+           personCount: { Adultes: 1},
+           childrenAges: [],
+           checkInDate: "12/06/2025",
+           checkOutDate: "14/06/2025",
+           specialRequest: "",
+           RoomsSelection: [], 
+           TotalPrice:100
+        })
+      );
+    });
    
   });
 });
