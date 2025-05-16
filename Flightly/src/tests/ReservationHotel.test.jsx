@@ -43,9 +43,10 @@ describe("RESERVATION HOTEL PAGE", () => {
   if (url.includes("/getuser/152")) {
     return Promise.resolve({ data: 
       {user:{
-      firstname:"abc",
-      lastname:"drf",
-      phone:"154"
+      firstname:"sara",
+      lastname:"mediouni",
+      phone:"154",
+      email:"abc@gmail.com"
     }} });
   }
 });
@@ -61,7 +62,7 @@ describe("RESERVATION HOTEL PAGE", () => {
       </Provider>
     );
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(
         axios.get.toHaveBeenCalledWith(expect.stringContaining("/acc/1524"))
       
@@ -71,7 +72,10 @@ describe("RESERVATION HOTEL PAGE", () => {
       
       );
       expect(screen.getByText("abcd")).toBeInTheDocument();
-      expect(screen.)
+      expect(screen.getByText("sara")).toBeInTheDocument();
+      expect(screen.getByText("mediouni")).toBeInTheDocument();
+      expect(screen.getByText("154")).toBeInTheDocument();
+      expect(screen.getByText("abc@gmail.com")).toBeInTheDocument();
       expect(screen.getByText("abcdef")).toBeInTheDocument();
       expect(screen.getByTestId("room_1")).toBeInTheDocument();
       fireEvent.click(screen.getByTestId("room_1"));
