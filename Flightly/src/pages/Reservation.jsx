@@ -322,6 +322,7 @@ const Reservation = () => {
                               <input
                                 type="number"
                                 min="1"
+                                data-testid="number"
                                 max={room.availableRooms}
                                 value={selectedRooms[room.name]}
                                 onChange={(e) => {
@@ -346,6 +347,7 @@ const Reservation = () => {
               <div className="flex items-center gap-4">
                 <FaUser className="text-violet900 text-2xl" />
                 <input
+                  data-testid="adults_number"
                   type="number"
                   name="Adultes"
                   value={reservationData.personCount.Adultes}
