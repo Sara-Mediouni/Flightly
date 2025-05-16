@@ -19,7 +19,7 @@ import {
   MdSportsGymnastics,
   MdLocalBar,
 } from "react-icons/md";
-import { use, useEffect, useState } from "react";
+import React,{ use, useEffect, useState } from "react";
 import { MdPets } from "react-icons/md";
 
 import axios from "axios";
@@ -127,7 +127,6 @@ const HotelDetails = () => {
         console.log(response.data);
         setHotels(response.data);
         setType(hotels.type);
-        console.log("Hotel Type:", hotels.type);
       })
       .catch((error) => {
         console.log(error);

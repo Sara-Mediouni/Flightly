@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React,{ useEffect, useMemo, useState } from "react";
 import CardsCollection from "../components/CardsCollection";
 
 import { useSelector } from "react-redux";
@@ -58,8 +58,7 @@ const handlePageChange = (page) => {
   };
   
   const gethotels = () => {
-    axios
-      .get("http://localhost:4000/acc/acc/?type=Hotel")
+    axios.get("http://localhost:4000/acc/acc/?type=Hotel")
       .then((response) => {
         console.log(response.data);
         setHotels(response.data);
@@ -117,13 +116,13 @@ useEffect(() => {
         </div>
 
         <div className="flex flex-col">
-          <label className="text-violet-900 font-medium mb-2">Hotel Name</label>
+          <label className="text-violet900 font-medium mb-2">Hotel Name</label>
           <input
             onChange={(e) => setName(e.target.value)}
             value={Name}
             type="text"
             placeholder="Enter name..."
-            className="h-[45px] px-4 border-2 border-violet-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all duration-200"
+            className="h-[45px] px-4 border-2 border-violet900 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 transition-all duration-200"
           />
         </div>
       </div>
@@ -145,6 +144,7 @@ useEffect(() => {
         {  currentHotels.map((hotel,index) => (
            
             <CardsCollection
+              data-testid="card"
               key={hotel._id}
               id={hotel._id}
               name={hotel.name}

@@ -1,4 +1,4 @@
-// PaginationDemo.jsx
+import React from "react";
 export function PaginationDemo({ currentPage, totalPages, handleNextPage, handlePrevPage, handlePageChange }) {
     const pageNumbers = [];
 

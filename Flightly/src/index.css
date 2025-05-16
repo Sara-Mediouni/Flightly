@@ -17,11 +17,11 @@ body{
   --color-violet900: #231942;
   --color-violet800: #5e548e;
   --color-violet700: #9f86c0;
-  --color-violet-900: '#231942';
-  --color-violet-800: '#5e548e';
-  --color-violet-700: '#9f86c0';
-  --color-violet-600: '#be95c4';
-  --color-violet-200: '#b8b8ff';
+  --color-violet-900: #231942;
+  --color-violet-800: #5e548e;
+  --color-violet-700: #9f86c0;
+  --color-violet-600: #be95c4;
+  --color-violet-200: #b8b8ff;
 }
 
 .test::after {
