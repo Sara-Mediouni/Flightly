@@ -18,7 +18,7 @@ describe("Verify Page tests",()=>{
     afterEach(()=>{
         vi.restoreAllMocks();
     });
-    it("Return confirmation state",async()=>{
+    it("Return Paiement confirmed as a message ",async()=>{
     render(
         <MemoryRouter>
         <VerifyPage/>
@@ -35,4 +35,21 @@ describe("Verify Page tests",()=>{
 
     })
     })
+    {/* it("Return Paiement failed as a message ",async()=>{
+    render(
+        <MemoryRouter>
+        <VerifyPage/>
+        </MemoryRouter>
+    )
+    expect(window.location.search).toContain("success=false");
+    expect(window.location.search).toContain("orderId=12345");
+    
+    waitFor(()=>{
+        expect(axios.get).toHaveBeenCalledWith(
+        expect.stringContaining("/verify/12345/false")
+        );
+    expect(screen.getByText("Paiement failed.")).toBeInTheDocument();
+
+    })
+    })*/}
 })

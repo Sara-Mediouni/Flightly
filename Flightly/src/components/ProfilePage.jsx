@@ -3,9 +3,8 @@ import { FaUserCircle } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { jwtDecode } from "jwt-decode";
 import axios from "axios";
-
+import React from "react";
 const ProfilePage = () => {
     const token=useSelector((state)=>state.auth.token);
    const user=useSelector((state=>state.auth.user));
@@ -53,7 +52,6 @@ const ProfilePage = () => {
             {form?.firstname} {form?.lastname}
           </h2>
         </div>
-
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -92,7 +90,7 @@ const ProfilePage = () => {
                 type="submit"
                 className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition"
               >
-                Enregistrer
+                Save
               </button>
             )}
           </div>

@@ -2,11 +2,14 @@ import { Provider } from "react-redux";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { store } from "../redux/store";
 import Navbar from "../components/Navbar";
-import { fireEvent, screen } from "@testing-library/dom";
+import { fireEvent, screen} from "@testing-library/dom";
 import React from "react";
 import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+
 import '@testing-library/jest-dom';
+
+ 
 describe("NAVBAR LOGIN BUTTON",()=>{
   beforeEach(()=>{
    vi.spyOn(Storage.prototype, "getItem").mockImplementation((key)=>{
@@ -32,5 +35,5 @@ describe("NAVBAR LOGIN BUTTON",()=>{
     expect(EmailInput).toBeInTheDocument();
 
   })
-
+  
 })

@@ -108,7 +108,7 @@ const Navbar = () => {
   <div className="relative z-[6000]">
     {token ? (
       <div className="relative">
-        <button onClick={() => setOpen(!open)}>
+        <button data-testid="button_profile" onClick={() => setOpen(!open)}>
           <RxAvatar color="#231942" size={30} />
         </button>
         {open && (
