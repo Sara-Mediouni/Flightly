@@ -213,6 +213,7 @@ const FlightReservation = () => {
                 {flight?.classes.map((cls, index) => (
                   <div
                     key={index}
+                    data-testid="flight_type"
                     name="flightClass"
                     className={`flex items-center justify-between p-4 border rounded-md shadow-md cursor-pointer ${
                       flightData.flightClass === cls.name

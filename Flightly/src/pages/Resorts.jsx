@@ -138,10 +138,13 @@ const Resorts = () => {
 
      
          {currentResorts && currentResorts.length > 0 ? (
-             <div className=" p-5 font-bold relative text-violet900 text-xl rounded-2xl shadow-2xl bg-violet-300 grid md:grid-cols-3 h-full gap-10 mx-20 mt-20">
+             <div className=" p-5 font-bold relative text-violet900 text-xl 
+             rounded-2xl shadow-2xl bg-violet-300 grid md:grid-cols-3 h-full
+              gap-10 mx-20 mt-20">
           { currentResorts.map((resort,index) => (
             
              <CardsCollection
+               data-testid="resort_card"
                key={resort._id}
                id={resort._id}
                name={resort.name}

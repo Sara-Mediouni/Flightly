@@ -2,7 +2,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import axios from "axios";
 import { Provider } from "react-redux";
-import { store } from "../redux/store";
 import Reservation from "../pages/Reservation";
 import authReducer from "../redux/authSlice"
 import React from "react";

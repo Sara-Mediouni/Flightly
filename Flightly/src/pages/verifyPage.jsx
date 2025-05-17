@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import React,{ useEffect, useState } from 'react';
 import axios from 'axios';
 
 const VerifyPage = () => {
@@ -12,7 +12,8 @@ const VerifyPage = () => {
   const url= type==="vol"? "reserveflight/reserveflight" : "reserveracc/reserveacc"
    const verify=()=>{
     
-    axios.get(`http://localhost:4000/${url}/verify/${orderId}/${success}`).then((response)=>
+    axios.get(`http://localhost:4000/${url}/verify/${orderId}/${success}`)
+    .then((response)=>
     
       console.log(response))
     .catch((error)=>{
